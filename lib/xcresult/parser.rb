@@ -36,7 +36,7 @@ module XCResult
       @action_test_plan_summaries
     end
 
-    def export_xccovreport(destination: nil)
+    def export_xccovreports(destination: nil)
       destination ||= Dir.pwd
 
       coverages = actions_invocation_record.actions.map do |action|
@@ -63,7 +63,7 @@ module XCResult
 
     def execute_cmd(cmd)
       output = `#{cmd}`
-      raise "Failed to execute - #{cmd}" unless $CHILD_STATUS.success?
+      raise "Failed to execute - #{cmd}" unless $?.success?
 
       output
     end
