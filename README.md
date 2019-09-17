@@ -1,5 +1,9 @@
 # XCResult
 
+[![Twitter: @joshdholtz](https://img.shields.io/badge/contact-@joshdholtz-blue.svg?style=flat)](https://twitter.com/KrauseFx)
+[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/KrauseFx/trainer/blob/master/LICENSE)
+[![Gem](https://img.shields.io/gem/v/xcresult.svg?style=flat)](http://rubygems.org/gems/trainer)
+
 Ruby interface for inspecting data and exporting data from Xcode 11 `.xcresult` files
 
 ## Installation
