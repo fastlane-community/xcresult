@@ -39,14 +39,35 @@ module XCResult
     def export_xccovreports(destination: nil)
       destination ||= Dir.pwd
 
-      coverages = actions_invocation_record.actions.map do |action|
+      # Collects report references
+      report_refs = actions_invocation_record.actions.map do |action|
         action.action_result.coverage.report_ref
       end.compact
-      ids = coverages.map(&:id)
+      ids = report_refs.map(&:id)
 
+      # Exports all xccovreport files from the report references
       ids.each_with_index.map do |id, i|
         output_path = File.join(destination, "action_#{i}.xccovreport")
         cmd = "xcrun xcresulttool export --path #{path} --id '#{id}' --output-path #{output_path} --type file"
+        execute_cmd(cmd)
+
+        output_path
+      end
+    end
+
+    def export_xccovarchives(destination: nil)
+      destination ||= Dir.pwd
+
+      # Collects archive references
+      archive_refs = actions_invocation_record.actions.map do |action|
+        action.action_result.coverage.archive_ref
+      end.compact
+      ids = archive_refs.map(&:id)
+
+      # Exports all xcovarchive directories from the archive references
+      ids.each_with_index.map do |id, i|
+        output_path = File.join(destination, "action_#{i}.xccovarchive")
+        cmd = "xcrun xcresulttool export --path #{path} --id '#{id}' --output-path #{output_path} --type directory"
         execute_cmd(cmd)
 
         output_path
