@@ -33,6 +33,6 @@ RSpec.describe XCResult do
 
     expect(testable_summary.tests.count).to eq(1)
     expect(testable_summary.tests[0].duration).to eq(9.394425988197327)
-    expect(testable_summary.tests[0].subtests.count).to eq(9.394425988197327)
+    expect(testable_summary.tests[0].subtests.count).to eq(1)
   end
 end
