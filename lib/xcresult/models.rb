@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'xcresult/version'
+require 'time'
 module XCResult
   # Model attributes and relationships taken from running the following command:
   # xcrun xcresulttool formatDescription
@@ -117,6 +118,8 @@ module XCResult
       type = data['_type']['_name']
       if type == 'ActionTestSummaryGroup'
         return ActionTestSummaryGroup.new(data, parent)
+      elsif type == 'ActionTestSummary'
+        return ActionTestSummary.new(data, parent)
       elsif type == 'ActionTestMetadata'
         return ActionTestMetadata.new(data, parent)
       else
@@ -160,12 +163,14 @@ module XCResult
   class ActionTestMetadata < ActionTestSummaryIdentifiableObject
     attr_accessor :test_status
     attr_accessor :duration
+    attr_accessor :summary_ref
     attr_accessor :performance_metrics_count
     attr_accessor :failure_summaries_count
     attr_accessor :activity_summaries_count
     def initialize(data, parent)
       self.test_status = fetch_value(data, 'testStatus')
       self.duration = fetch_value(data, 'duration').to_f
+      self.summary_ref = Reference.new(data['summaryRef']) if data['summaryRef']
       self.performance_metrics_count = fetch_value(data, 'performanceMetricsCount')
       self.failure_summaries_count = fetch_value(data, 'failureSummariesCount')
       self.activity_summaries_count = fetch_value(data, 'activitySummariesCount')
@@ -418,6 +423,128 @@ module XCResult
       end
 
       new_message
+    end
+  end
+
+  # - ActionTestSummary
+  #   * Supertype: ActionTestSummaryIdentifiableObject
+  #   * Kind: object
+  #   * Properties:
+  #     + testStatus: String
+  #     + duration: Double
+  #     + performanceMetrics: [ActionTestPerformanceMetricSummary]
+  #     + failureSummaries: [ActionTestFailureSummary]
+  #     + activitySummaries: [ActionTestActivitySummary]
+  class ActionTestSummary < ActionTestSummaryIdentifiableObject
+    attr_accessor :test_status
+    attr_accessor :duration
+    attr_accessor :activity_summaries
+    def initialize(data, parent = nil)
+      self.test_status = fetch_value(data, 'testStatus')
+      self.duration = fetch_value(data, 'duration').to_f
+      self.activity_summaries = fetch_values(data, 'activitySummaries').map do |summary_data|
+        ActionTestActivitySummary.new(summary_data)
+      end
+      super(data, parent)
+    end
+  end
+
+  # - ActionTestActivitySummary
+  #   * Kind: object
+  #   * Properties:
+  #     + title: String
+  #     + activityType: String
+  #     + uuid: String
+  #     + start: Date?
+  #     + finish: Date?
+  #     + attachments: [ActionTestAttachment]
+  #     + subactivities: [ActionTestActivitySummary]
+  class ActionTestActivitySummary < AbstractObject
+    attr_accessor :title
+    attr_accessor :activity_type
+    attr_accessor :uuid
+    attr_accessor :start
+    attr_accessor :finish
+    attr_accessor :attachments
+    attr_accessor :subactivities
+    def initialize(data)
+      self.title = fetch_value(data, 'title')
+      self.activity_type = fetch_value(data, 'activityType')
+      self.uuid = fetch_value(data, 'uuid')
+      self.start = Time.parse(fetch_value(data, 'start')) if data['start']
+      self.finish = Time.parse(fetch_value(data, 'finish')) if data['finish']
+      self.attachments = fetch_values(data, 'attachments').map do |attachment_data|
+        ActionTestAttachment.new(attachment_data)
+      end
+      self.subactivities = fetch_values(data, 'subactivities').map do |summary_data|
+        ActionTestActivitySummary.new(summary_data)
+      end
+      super(data)
+    end
+  end
+
+  # - ActionTestAttachment
+  #   * Kind: object
+  #   * Properties:
+  #     + uniformTypeIdentifier: String
+  #     + name: String?
+  #     + timestamp: Date?
+  #     + userInfo: SortedKeyValueArray?
+  #     + lifetime: String
+  #     + inActivityIdentifier: Int
+  #     + filename: String?
+  #     + payloadRef: Reference?
+  #     + payloadSize: Int
+  class ActionTestAttachment < AbstractObject
+    attr_accessor :uniform_type_identifier
+    attr_accessor :name
+    attr_accessor :timestamp
+    attr_accessor :user_info
+    attr_accessor :lifetime
+    attr_accessor :in_activity_identifier
+    attr_accessor :filename
+    attr_accessor :payload_ref
+    attr_accessor :payload_size
+    def initialize(data)
+      self.uniform_type_identifier = fetch_value(data, 'uniformTypeIdentifier')
+      self.name = fetch_value(data, 'name')
+      self.timestamp = Time.parse(fetch_value(data, 'timestamp')) if data['timestamp']
+      self.user_info = SortedKeyValueArray.new(data['userInfo']) if data['userInfo']
+      self.lifetime = fetch_value(data, 'lifetime')
+      self.in_activity_identifier = fetch_value(data, 'inActivityIdentifier').to_i
+      self.filename = fetch_value(data, 'filename')
+      self.payload_ref = Reference.new(data['payloadRef']) if data['payloadRef']
+      self.payload_size = fetch_value(data, 'payloadSize').to_i
+      super(data)
+    end
+  end
+
+  # - SortedKeyValueArray
+  #   * Kind: object
+  #   * Properties:
+  #     + storage: [SortedKeyValueArrayPair]
+  class SortedKeyValueArray < AbstractObject
+    attr_accessor :storage
+    def initialize(data)
+      self.storage = fetch_values(data, 'storage').map do |pair_data|
+        SortedKeyValueArrayPair.new(pair_data)
+      end
+      super(data)
+    end
+  end
+
+  # - SortedKeyValueArrayPair
+  #   * Kind: object
+  #   * Properties:
+  #     + key: String
+  #     + value: SchemaSerializable
+  class SortedKeyValueArrayPair < AbstractObject
+    attr_accessor :key
+    attr_accessor :value
+    def initialize(data)
+      self.key = fetch_value(data, 'key')
+      self.value = fetch_value(data, 'value')
+      super(data)
     end
   end
 end
