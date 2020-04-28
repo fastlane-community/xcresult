@@ -118,6 +118,8 @@ module XCResult
       type = data['_type']['_name']
       if type == 'ActionTestSummaryGroup'
         return ActionTestSummaryGroup.new(data, parent)
+      elsif type == 'ActionTestSummary'
+        return ActionTestSummary.new(data, parent)
       elsif type == 'ActionTestMetadata'
         return ActionTestMetadata.new(data, parent)
       else
@@ -437,13 +439,13 @@ module XCResult
     attr_accessor :test_status
     attr_accessor :duration
     attr_accessor :activity_summaries
-    def initialize(data)
+    def initialize(data, parent = nil)
       self.test_status = fetch_value(data, 'testStatus')
       self.duration = fetch_value(data, 'duration').to_f
       self.activity_summaries = fetch_values(data, 'activitySummaries').map do |summary_data|
         ActionTestActivitySummary.new(summary_data)
       end
-      super(data, nil)
+      super(data, parent)
     end
   end
 
