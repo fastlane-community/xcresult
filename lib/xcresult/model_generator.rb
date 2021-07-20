@@ -1,5 +1,6 @@
 require 'json'
 require 'erb'
+require 'tsort'
 
 module XCResult
   class ModelGenerator
@@ -39,7 +40,7 @@ module XCResult
 
         TEMPLATE
 
-        @source.types.each do |type|
+        sorted_types.each do |type|
           type_text = compose_type(type, 2 * 2)
           file.puts(type_text)
           file.puts('')
@@ -51,6 +52,14 @@ module XCResult
         TEMPLATE
       ensure
         file.close
+      end
+
+      # Use topological sort to correctly defines classes that may depend on another as its super class
+      def sorted_types
+        h = @source.types.map {|x| [x, [@source.types.find {|y| y.name == x.supertype}].compact] }.to_h
+        each_node = ->(&b) { h.each_key(&b) }
+        each_child = ->(n, &b) { h[n].each(&b) }
+        TSort.tsort(each_node, each_child)
       end
 
       def compose_type(type, indentation)
