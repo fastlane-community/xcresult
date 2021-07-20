@@ -79,6 +79,9 @@ module XCResult
         <% type.properties.each do |property| %>
             @<%= property.name_in_snake_case %> = <%= property.mapping(type_to_kind[property.main_type], 'data') %>
         <% end %>
+        <% if type.supertype %>
+            super
+        <% end %>
           end
         end
         TYPE
