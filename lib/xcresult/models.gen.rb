@@ -1,5 +1,5 @@
 # This is a generated file. Don't modify this directly!
-# Last generated at: 2021-07-20 22:18:47 UTC
+# Last generated at: 2021-07-20 22:23:35 UTC
 #
 # Name: Xcode Result Types
 # Version: 3.30
@@ -443,6 +443,7 @@ module XCResult
     
       def initialize(data)
         @identifier = data.dig('identifier', '_value') if data['identifier']
+        super
       end
     end
 
@@ -477,6 +478,7 @@ module XCResult
         @performance_metrics_count = data.dig('performanceMetricsCount', '_value').to_i
         @failure_summaries_count = data.dig('failureSummariesCount', '_value').to_i
         @activity_summaries_count = data.dig('activitySummariesCount', '_value').to_i
+        super
       end
     end
 
@@ -578,6 +580,7 @@ module XCResult
     
       def initialize(data)
         @testable_summaries = (data.dig('testableSummaries', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
+        super
       end
     end
 
@@ -641,6 +644,7 @@ module XCResult
         @skip_notice_summary = Kernel.const_get("XCResult::Models::#{data.dig('skipNoticeSummary', '_type', '_name')}").new(data.dig('skipNoticeSummary')) if data['skipNoticeSummary']
         @activity_summaries = (data.dig('activitySummaries', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
         @repetition_policy_summary = Kernel.const_get("XCResult::Models::#{data.dig('repetitionPolicySummary', '_type', '_name')}").new(data.dig('repetitionPolicySummary')) if data['repetitionPolicySummary']
+        super
       end
     end
 
@@ -659,6 +663,7 @@ module XCResult
       def initialize(data)
         @duration = data.dig('duration', '_value').to_f
         @subtests = (data.dig('subtests', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
+        super
       end
     end
 
@@ -701,6 +706,7 @@ module XCResult
         @failure_summaries = (data.dig('failureSummaries', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
         @test_language = data.dig('testLanguage', '_value') if data['testLanguage']
         @test_region = data.dig('testRegion', '_value') if data['testRegion']
+        super
       end
     end
 
@@ -790,6 +796,7 @@ module XCResult
         @start_location = Kernel.const_get("XCResult::Models::#{data.dig('startLocation', '_type', '_name')}").new(data.dig('startLocation')) if data['startLocation']
         @end_location = Kernel.const_get("XCResult::Models::#{data.dig('endLocation', '_type', '_name')}").new(data.dig('endLocation')) if data['endLocation']
         @edges = (data.dig('edges', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
+        super
       end
     end
 
@@ -833,6 +840,7 @@ module XCResult
         @location = Kernel.const_get("XCResult::Models::#{data.dig('location', '_type', '_name')}").new(data.dig('location')) if data['location']
         @description = data.dig('description', '_value')
         @call_depth = data.dig('callDepth', '_value').to_i
+        super
       end
     end
 
@@ -888,6 +896,7 @@ module XCResult
         @steps = (data.dig('steps', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
         @result_type = data.dig('resultType', '_value') if data['resultType']
         @key_event_index = data.dig('keyEventIndex', '_value').to_i
+        super
       end
     end
 
@@ -897,6 +906,7 @@ module XCResult
     class ActivityLogAnalyzerWarningMessage < ActivityLogMessage
     
       def initialize(data)
+        super
       end
     end
 
@@ -960,6 +970,7 @@ module XCResult
         @command_details = data.dig('commandDetails', '_value')
         @emitted_output = data.dig('emittedOutput', '_value')
         @exit_code = data.dig('exitCode', '_value').to_i if data['exitCode']
+        super
       end
     end
 
@@ -974,6 +985,7 @@ module XCResult
     
       def initialize(data)
         @subtitle = data.dig('subtitle', '_value')
+        super
       end
     end
 
@@ -1005,6 +1017,7 @@ module XCResult
     
       def initialize(data)
         @product_type = data.dig('productType', '_value') if data['productType']
+        super
       end
     end
 
@@ -1051,6 +1064,7 @@ module XCResult
         @was_skipped = data.dig('wasSkipped', '_value')
         @runnable_path = data.dig('runnablePath', '_value') if data['runnablePath']
         @runnable_uti = data.dig('runnableUTI', '_value') if data['runnableUTI']
+        super
       end
     end
 
@@ -1425,6 +1439,7 @@ module XCResult
     
       def initialize(data)
         @test_case_name = data.dig('testCaseName', '_value')
+        super
       end
     end
 
