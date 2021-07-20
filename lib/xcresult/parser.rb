@@ -13,7 +13,7 @@ module XCResult
       result_bundle_json_raw = get_result_bundle_json
       @result_bundle_json = JSON.parse(result_bundle_json_raw)
 
-      @actions_invocation_record = XCResult::ActionsInvocationRecord.new(@result_bundle_json)
+      @actions_invocation_record = XCResult::Models::ActionsInvocationRecord.new(@result_bundle_json)
     end
 
     def action_test_plan_summaries
@@ -30,7 +30,7 @@ module XCResult
       @action_test_plan_summaries = ids.map do |id|
         raw = execute_cmd("xcrun xcresulttool get --format json --path #{path} --id #{id}")
         json = JSON.parse(raw)
-        XCResult::ActionTestPlanRunSummaries.new(json)
+        XCResult::Models::ActionTestPlanRunSummaries.new(json)
       end
 
       @action_test_plan_summaries
