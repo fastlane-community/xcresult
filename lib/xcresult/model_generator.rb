@@ -159,22 +159,24 @@ module XCResult
       end
 
       def mapping(kind, variable_name)
-        return "#{variable_name}.fetch('#{name}', {})['_values'].map {|d| #{_mapping(kind, 'd')} }" if array
+        return "(#{variable_name}.dig('#{name}', '_values') || []).map {|d| #{_mapping(kind, 'd')} }" if array
 
-        _mapping(kind, variable_name) + (optional ? " if #{variable_name}[#{name}]" : '')
+        _mapping(kind, variable_name) + (optional ? " if #{variable_name}['#{name}']" : '')
       end
 
       def _mapping(kind, variable_name)
         if kind == 'object'
-          "Kernel.const_get(\"XCResult::Models::\#{#{variable_name}['_type']['_name']}\").new(#{variable_name}.fetch('#{name}')['_value'])"
+          type_access_key = array ? "'_type', '_name'" : "'#{name}', '_type', '_name'"
+          value_access_key = array ? variable_name : "#{variable_name}.dig('#{name}')"
+          "Kernel.const_get(\"XCResult::Models::\#{#{variable_name}.dig(#{type_access_key})}\").new(#{value_access_key})"
         elsif kind == 'value' && main_type == 'Date'
-          "Time.parse(#{variable_name}.fetch('#{name}')['_value'])"
+          "Time.parse(#{variable_name}.dig('#{name}', '_value'))"
         elsif kind == 'value' && main_type == 'Int'
-          "#{variable_name}.fetch('#{name}')['_value'].to_i"
+          "#{variable_name}.dig('#{name}', '_value').to_i"
         elsif kind == 'value' && main_type == 'Double'
-          "#{variable_name}.fetch('#{name}')['_value'].to_f"
+          "#{variable_name}.dig('#{name}', '_value').to_f"
         else
-          "#{variable_name}.fetch('#{name}')['_value']"
+          "#{variable_name}.dig('#{name}', '_value')"
         end
       end
 
