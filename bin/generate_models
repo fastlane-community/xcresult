@@ -1,0 +1,6 @@
+#! /usr/bin/env ruby
+
+require_relative '../lib/xcresult/model_generator'
+
+XCResult::ModelGenerator.generate(File.expand_path(File.join(File.dirname(__FILE__), '../lib/xcresult/models.gen.rb')))
+puts 'Done! Check out lib/xcresult/models.gen.rb'
