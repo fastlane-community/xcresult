@@ -152,7 +152,7 @@ module XCResult
       def mapping(kind, variable_name)
         return "#{variable_name}.fetch('#{name}', {})['_values'].map {|d| #{_mapping(kind, 'd')} }" if array
 
-        _mapping(kind, variable_name)
+        _mapping(kind, variable_name) + (optional ? " if #{variable_name}[#{name}]" : '')
       end
 
       def _mapping(kind, variable_name)
@@ -160,7 +160,11 @@ module XCResult
           "Kernel.const_get(\"XCResult::Models::\#{#{variable_name}['_type']['_name']}\").new(#{variable_name}.fetch('#{name}')['_value'])"
         elsif kind == 'value' && main_type == 'Date'
           "Time.parse(#{variable_name}.fetch('#{name}')['_value'])"
-        elsif kind == 'value'
+        elsif kind == 'value' && main_type == 'Int'
+          "#{variable_name}.fetch('#{name}')['_value'].to_i"
+        elsif kind == 'value' && main_type == 'Double'
+          "#{variable_name}.fetch('#{name}')['_value'].to_f"
+        else
           "#{variable_name}.fetch('#{name}')['_value']"
         end
       end
