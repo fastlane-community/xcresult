@@ -9,16 +9,16 @@ module XCResult
     end
 
     def self.generate(destination)
-      parser = Parser.new(source: format_description)
+      parser = Parser.new(format: format_description)
       parser.parse
-      generator = Generator.new(parser.source)
+      generator = Generator.new(parser.format)
       generator.write(destination)
     end
 
     class Generator
-      def initialize(source)
-        @source = source
-        @type_to_kind = source.types.map { |t| [t.name, t.kind] }.to_h
+      def initialize(format)
+        @format = format
+        @type_to_kind = format.types.map { |t| [t.name, t.kind] }.to_h
       end
 
       def write(destination)
@@ -27,9 +27,9 @@ module XCResult
         # This is a generated file. Don't modify this directly!
         # Last generated at: #{Time.now.utc}
         #
-        # #{@source.name}
-        # #{@source.version}
-        # #{@source.signature}
+        # #{@format.name}
+        # #{@format.version}
+        # #{@format.signature}
         require 'time'
 
         HEADER
@@ -56,7 +56,7 @@ module XCResult
 
       # Use topological sort to correctly defines classes that may depend on another as its super class
       def sorted_types
-        h = @source.types.map {|x| [x, [@source.types.find {|y| y.name == x.supertype}].compact] }.to_h
+        h = @format.types.map {|x| [x, [@format.types.find {|y| y.name == x.supertype}].compact] }.to_h
         each_node = ->(&b) { h.each_key(&b) }
         each_child = ->(n, &b) { h[n].each(&b) }
         TSort.tsort(each_node, each_child)
@@ -91,18 +91,18 @@ module XCResult
     end
 
     class Parser
-      attr_reader :source
+      attr_reader :format
 
-      def initialize(source: )
-        @raw_source = source
-        @lines = source.each_line.to_a
-        @source = Source.new
+      def initialize(format:)
+        @raw_format = format
+        @lines = format.each_line.to_a
+        @format = Format.new
       end
 
       def parse
-        @source.name = @lines.shift.chomp
-        @source.version = @lines.shift.chomp
-        @source.signature = @lines.shift.chomp
+        @format.name = @lines.shift.chomp
+        @format.version = @lines.shift.chomp
+        @format.signature = @lines.shift.chomp
 
         # Drop "- Types" lines
         @lines.shift
@@ -130,7 +130,7 @@ module XCResult
         end
 
         types << type if type
-        @source.types = types
+        @format.types = types
       end
 
       def parse_properties(type)
@@ -154,7 +154,7 @@ module XCResult
       end
     end
 
-    Source = Struct.new(:name, :version, :signature, :types, keyword_init: true)
+    Format = Struct.new(:name, :version, :signature, :types, keyword_init: true)
     Type = Struct.new(:name, :supertype, :kind, :properties, :raw_text, keyword_init: true)
     Property = Struct.new(:name, :type, :main_type, :optional, :array, keyword_init: true) do
       def name_in_snake_case
