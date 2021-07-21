@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'json'
 require 'erb'
 require 'tsort'
@@ -24,21 +26,21 @@ module XCResult
       def write(destination)
         file = File.open(destination, 'w+')
         file.puts(<<~"HEADER")
-        # This is a generated file. Don't modify this directly!
-        # Last generated at: #{Time.now.utc}
-        #
-        # #{@format.name}
-        # #{@format.version}
-        # #{@format.signature}
-        require 'time'
+          # This is a generated file. Don't modify this directly!
+          # Last generated at: #{Time.now.utc}
+          #
+          # #{@format.name}
+          # #{@format.version}
+          # #{@format.signature}
+          require 'time'
 
         HEADER
 
-        file.puts(<<~TEMPLATE)
-        module XCResult
-          module Models
+        file.puts(<<~OPEN_MODULE)
+          module XCResult
+            module Models
 
-        TEMPLATE
+        OPEN_MODULE
 
         sorted_types.each do |type|
           type_text = compose_type(type, 2 * 2)
@@ -46,10 +48,10 @@ module XCResult
           file.puts('')
         end
 
-        file.puts(<<~TEMPLATE)
+        file.puts(<<~CLOSE_MODULE)
+            end
           end
-        end
-        TEMPLATE
+        CLOSE_MODULE
       ensure
         file.close
       end
@@ -64,26 +66,26 @@ module XCResult
 
       def compose_type(type, indentation)
         type_def = <<~"TYPE"
-        <%= type.raw_text.each_line.map { |line| '# ' + line[2..-1] }.join %>
-        <% if type.supertype %>
-        class <%= type.name %> < <%= type.supertype %>
-        <% else %>
-        class <%= type.name %>
-        <% end%>
-        <% type.properties.each do |property| %>
-          <%= property.rdoc_comment %>
-          attr_reader :<%= property.name_in_snake_case %>
-        <% end %>
+          <%= type.raw_text.each_line.map { |line| '# ' + line[2..-1] }.join %>
+          <% if type.supertype %>
+          class <%= type.name %> < <%= type.supertype %>
+          <% else %>
+          class <%= type.name %>
+          <% end%>
+          <% type.properties.each do |property| %>
+            <%= property.rdoc_comment %>
+            attr_reader :<%= property.name_in_snake_case %>
+          <% end %>
 
-          def initialize(data)
-        <% type.properties.each do |property| %>
-            @<%= property.name_in_snake_case %> = <%= property.mapping(type_to_kind[property.main_type], 'data') %>
-        <% end %>
-        <% if type.supertype %>
-            super
-        <% end %>
+            def initialize(data)
+          <% type.properties.each do |property| %>
+              @<%= property.name_in_snake_case %> = <%= property.mapping(type_to_kind[property.main_type], 'data') %>
+          <% end %>
+          <% if type.supertype %>
+              super
+          <% end %>
+            end
           end
-        end
         TYPE
         type_def = ERB.new(type_def, trim_mode: '<>').result_with_hash(type: type, type_to_kind: @type_to_kind)
         type_def.each_line.map { |line| "#{' ' * indentation}#{line}" }.join
