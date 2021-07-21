@@ -1,5 +1,5 @@
 # This is a generated file. Don't modify this directly!
-# Last generated at: 2021-07-20 22:23:35 UTC
+# Last generated at: 2021-07-21 01:01:36 UTC
 #
 # Name: Xcode Result Types
 # Version: 3.30
@@ -75,9 +75,9 @@ module XCResult
       # @return [Int, nil] ramSizeInMegabytes
       attr_reader :ram_size_in_megabytes
       # @return [Int, nil] physicalCPUCoresPerPackage
-      attr_reader :physical_cpucores_per_package
+      attr_reader :physical_cpu_cores_per_package
       # @return [Int, nil] logicalCPUCoresPerPackage
-      attr_reader :logical_cpucores_per_package
+      attr_reader :logical_cpu_cores_per_package
       # @return [ActionPlatformRecord] platformRecord
       attr_reader :platform_record
     
@@ -97,8 +97,8 @@ module XCResult
         @cpu_speed_in_mhz = data.dig('cpuSpeedInMHz', '_value').to_i if data['cpuSpeedInMHz']
         @bus_speed_in_mhz = data.dig('busSpeedInMHz', '_value').to_i if data['busSpeedInMHz']
         @ram_size_in_megabytes = data.dig('ramSizeInMegabytes', '_value').to_i if data['ramSizeInMegabytes']
-        @physical_cpucores_per_package = data.dig('physicalCPUCoresPerPackage', '_value').to_i if data['physicalCPUCoresPerPackage']
-        @logical_cpucores_per_package = data.dig('logicalCPUCoresPerPackage', '_value').to_i if data['logicalCPUCoresPerPackage']
+        @physical_cpu_cores_per_package = data.dig('physicalCPUCoresPerPackage', '_value').to_i if data['physicalCPUCoresPerPackage']
+        @logical_cpu_cores_per_package = data.dig('logicalCPUCoresPerPackage', '_value').to_i if data['logicalCPUCoresPerPackage']
         @platform_record = Kernel.const_get("XCResult::Models::#{data.dig('platformRecord', '_type', '_name')}").new(data.dig('platformRecord'))
       end
     end
@@ -224,14 +224,14 @@ module XCResult
       # @return [ActionDeviceRecord] localComputerRecord
       attr_reader :local_computer_record
       # @return [ActionSDKRecord] targetSDKRecord
-      attr_reader :target_sdkrecord
+      attr_reader :target_sdk_record
     
       def initialize(data)
         @display_name = data.dig('displayName', '_value')
         @target_architecture = data.dig('targetArchitecture', '_value')
         @target_device_record = Kernel.const_get("XCResult::Models::#{data.dig('targetDeviceRecord', '_type', '_name')}").new(data.dig('targetDeviceRecord'))
         @local_computer_record = Kernel.const_get("XCResult::Models::#{data.dig('localComputerRecord', '_type', '_name')}").new(data.dig('localComputerRecord'))
-        @target_sdkrecord = Kernel.const_get("XCResult::Models::#{data.dig('targetSDKRecord', '_type', '_name')}").new(data.dig('targetSDKRecord'))
+        @target_sdk_record = Kernel.const_get("XCResult::Models::#{data.dig('targetSDKRecord', '_type', '_name')}").new(data.dig('targetSDKRecord'))
       end
     end
 

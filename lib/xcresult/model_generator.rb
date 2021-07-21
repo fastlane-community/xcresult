@@ -158,7 +158,10 @@ module XCResult
     Type = Struct.new(:name, :supertype, :kind, :properties, :raw_text, keyword_init: true)
     Property = Struct.new(:name, :type, :main_type, :optional, :array, keyword_init: true) do
       def name_in_snake_case
-        name.gsub(/([a-z])(?=[A-Z])/) { (Regexp.last_match[1] || Regexp.last_match[2]) << '_' }.downcase
+        name
+          .gsub(/(CPU|ID|MHz|UTI|SDK)/) { Regexp.last_match[1].downcase.capitalize } # normalize acronyms
+          .gsub(/([a-z])(?=[A-Z])/) { (Regexp.last_match[1] || Regexp.last_match[2]) << '_' }
+          .downcase
       end
 
       def mapping(kind, variable_name)
