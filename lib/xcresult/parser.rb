@@ -2,6 +2,7 @@
 
 require 'shellwords'
 require 'json'
+require 'fileutils'
 
 module XCResult
   class Parser
@@ -65,6 +66,43 @@ module XCResult
         execute_cmd(cmd)
 
         output_path
+      end
+    end
+
+    def export_screenshots(destination: Dir.pwd, by_device: false, by_locale: false)
+      # Filter non test results; i.e build action
+      actions = actions_invocation_record.actions.select {|x| x.action_result.tests_ref }
+
+      # Iterate through each action as it represents run destination (testing device)
+      actions.each do |action|
+        action_test_plan_run_summaries = action.action_result.tests_ref.load_object(from: path)
+        action_testable_summaries = action_test_plan_run_summaries.summaries.flat_map(&:testable_summaries)
+
+        # Iterate thorugh each action_testable_summary as it represents testing conditions such as region and language
+        action_testable_summaries.each do |action_testable_summary|
+          # Collect all attachments from a testing condition
+          attachments = action_testable_summary.all_tests
+                                               .map(&:summary_ref)
+                                               .map { |ref| ref.load_object(from: path) }
+                                               .flat_map(&:activity_summaries)
+                                               .flat_map(&:subactivities)
+                                               .flat_map(&:attachments)
+
+          # Prepare output directory for each tests
+          locale = [action_testable_summary.test_language, action_testable_summary.test_region].compact.join('_')
+          locale = 'UNKOWN' if locale.empty?
+          output_directory = destination
+          output_directory = File.join(output_directory, action.run_destination.target_device_record.model_name) if by_device
+          output_directory = File.join(output_directory, locale) if by_locale
+          FileUtils.mkdir_p(output_directory) unless Dir.exist?(output_directory)
+
+          # Finally exports attachments
+          attachments.each do |attachment|
+            output_path = File.join(output_directory, attachment.filename)
+            cmd = "xcrun xcresulttool export --path #{path} --id '#{attachment.payload_ref.id}' --output-path '#{output_path}' --type file"
+            execute_cmd(cmd)
+          end
+        end
       end
     end
 
