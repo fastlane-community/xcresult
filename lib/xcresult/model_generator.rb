@@ -40,6 +40,10 @@ module XCResult
           module XCResult
             module Models
 
+              def self.load_class(class_name)
+                Kernel.const_get("XCResult::Models::\#{class_name}")
+              end
+
         OPEN_MODULE
 
         sorted_types.each do |type|
@@ -176,7 +180,7 @@ module XCResult
         if kind == 'object'
           type_access_key = array ? "'_type', '_name'" : "'#{name}', '_type', '_name'"
           value_access_key = array ? variable_name : "#{variable_name}.dig('#{name}')"
-          "Kernel.const_get(\"XCResult::Models::\#{#{variable_name}.dig(#{type_access_key})}\").new(#{value_access_key})"
+          "Models.load_class(#{variable_name}.dig(#{type_access_key})).new(#{value_access_key})"
         elsif kind == 'value' && main_type == 'Date'
           "Time.parse(#{variable_name}.dig('#{name}', '_value'))"
         elsif kind == 'value' && main_type == 'Int'

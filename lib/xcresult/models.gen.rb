@@ -1,5 +1,5 @@
 # This is a generated file. Don't modify this directly!
-# Last generated at: 2021-07-21 01:01:36 UTC
+# Last generated at: 2021-07-22 07:27:14 UTC
 #
 # Name: Xcode Result Types
 # Version: 3.30
@@ -8,6 +8,10 @@ require 'time'
 
 module XCResult
   module Models
+
+    def self.load_class(class_name)
+      Kernel.const_get("XCResult::Models::#{class_name}")
+    end
 
     # - ActionAbstractTestSummary
     #   * Kind: object
@@ -99,7 +103,7 @@ module XCResult
         @ram_size_in_megabytes = data.dig('ramSizeInMegabytes', '_value').to_i if data['ramSizeInMegabytes']
         @physical_cpu_cores_per_package = data.dig('physicalCPUCoresPerPackage', '_value').to_i if data['physicalCPUCoresPerPackage']
         @logical_cpu_cores_per_package = data.dig('logicalCPUCoresPerPackage', '_value').to_i if data['logicalCPUCoresPerPackage']
-        @platform_record = Kernel.const_get("XCResult::Models::#{data.dig('platformRecord', '_type', '_name')}").new(data.dig('platformRecord'))
+        @platform_record = Models.load_class(data.dig('platformRecord', '_type', '_name')).new(data.dig('platformRecord'))
       end
     end
 
@@ -155,9 +159,9 @@ module XCResult
         @title = data.dig('title', '_value') if data['title']
         @started_time = Time.parse(data.dig('startedTime', '_value'))
         @ended_time = Time.parse(data.dig('endedTime', '_value'))
-        @run_destination = Kernel.const_get("XCResult::Models::#{data.dig('runDestination', '_type', '_name')}").new(data.dig('runDestination'))
-        @build_result = Kernel.const_get("XCResult::Models::#{data.dig('buildResult', '_type', '_name')}").new(data.dig('buildResult'))
-        @action_result = Kernel.const_get("XCResult::Models::#{data.dig('actionResult', '_type', '_name')}").new(data.dig('actionResult'))
+        @run_destination = Models.load_class(data.dig('runDestination', '_type', '_name')).new(data.dig('runDestination'))
+        @build_result = Models.load_class(data.dig('buildResult', '_type', '_name')).new(data.dig('buildResult'))
+        @action_result = Models.load_class(data.dig('actionResult', '_type', '_name')).new(data.dig('actionResult'))
       end
     end
 
@@ -196,13 +200,13 @@ module XCResult
       def initialize(data)
         @result_name = data.dig('resultName', '_value')
         @status = data.dig('status', '_value')
-        @metrics = Kernel.const_get("XCResult::Models::#{data.dig('metrics', '_type', '_name')}").new(data.dig('metrics'))
-        @issues = Kernel.const_get("XCResult::Models::#{data.dig('issues', '_type', '_name')}").new(data.dig('issues'))
-        @coverage = Kernel.const_get("XCResult::Models::#{data.dig('coverage', '_type', '_name')}").new(data.dig('coverage'))
-        @timeline_ref = Kernel.const_get("XCResult::Models::#{data.dig('timelineRef', '_type', '_name')}").new(data.dig('timelineRef')) if data['timelineRef']
-        @log_ref = Kernel.const_get("XCResult::Models::#{data.dig('logRef', '_type', '_name')}").new(data.dig('logRef')) if data['logRef']
-        @tests_ref = Kernel.const_get("XCResult::Models::#{data.dig('testsRef', '_type', '_name')}").new(data.dig('testsRef')) if data['testsRef']
-        @diagnostics_ref = Kernel.const_get("XCResult::Models::#{data.dig('diagnosticsRef', '_type', '_name')}").new(data.dig('diagnosticsRef')) if data['diagnosticsRef']
+        @metrics = Models.load_class(data.dig('metrics', '_type', '_name')).new(data.dig('metrics'))
+        @issues = Models.load_class(data.dig('issues', '_type', '_name')).new(data.dig('issues'))
+        @coverage = Models.load_class(data.dig('coverage', '_type', '_name')).new(data.dig('coverage'))
+        @timeline_ref = Models.load_class(data.dig('timelineRef', '_type', '_name')).new(data.dig('timelineRef')) if data['timelineRef']
+        @log_ref = Models.load_class(data.dig('logRef', '_type', '_name')).new(data.dig('logRef')) if data['logRef']
+        @tests_ref = Models.load_class(data.dig('testsRef', '_type', '_name')).new(data.dig('testsRef')) if data['testsRef']
+        @diagnostics_ref = Models.load_class(data.dig('diagnosticsRef', '_type', '_name')).new(data.dig('diagnosticsRef')) if data['diagnosticsRef']
       end
     end
 
@@ -229,9 +233,9 @@ module XCResult
       def initialize(data)
         @display_name = data.dig('displayName', '_value')
         @target_architecture = data.dig('targetArchitecture', '_value')
-        @target_device_record = Kernel.const_get("XCResult::Models::#{data.dig('targetDeviceRecord', '_type', '_name')}").new(data.dig('targetDeviceRecord'))
-        @local_computer_record = Kernel.const_get("XCResult::Models::#{data.dig('localComputerRecord', '_type', '_name')}").new(data.dig('localComputerRecord'))
-        @target_sdk_record = Kernel.const_get("XCResult::Models::#{data.dig('targetSDKRecord', '_type', '_name')}").new(data.dig('targetSDKRecord'))
+        @target_device_record = Models.load_class(data.dig('targetDeviceRecord', '_type', '_name')).new(data.dig('targetDeviceRecord'))
+        @local_computer_record = Models.load_class(data.dig('localComputerRecord', '_type', '_name')).new(data.dig('localComputerRecord'))
+        @target_sdk_record = Models.load_class(data.dig('targetSDKRecord', '_type', '_name')).new(data.dig('targetSDKRecord'))
       end
     end
 
@@ -298,8 +302,8 @@ module XCResult
         @uuid = data.dig('uuid', '_value')
         @start = Time.parse(data.dig('start', '_value')) if data['start']
         @finish = Time.parse(data.dig('finish', '_value')) if data['finish']
-        @attachments = (data.dig('attachments', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
-        @subactivities = (data.dig('subactivities', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
+        @attachments = (data.dig('attachments', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
+        @subactivities = (data.dig('subactivities', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
         @failure_summary_ids = (data.dig('failureSummaryIDs', '_values') || []).map {|d| d.dig('failureSummaryIDs', '_value') }
         @expected_failure_ids = (data.dig('expectedFailureIDs', '_values') || []).map {|d| d.dig('expectedFailureIDs', '_value') }
       end
@@ -341,11 +345,11 @@ module XCResult
         @uniform_type_identifier = data.dig('uniformTypeIdentifier', '_value')
         @name = data.dig('name', '_value') if data['name']
         @timestamp = Time.parse(data.dig('timestamp', '_value')) if data['timestamp']
-        @user_info = Kernel.const_get("XCResult::Models::#{data.dig('userInfo', '_type', '_name')}").new(data.dig('userInfo')) if data['userInfo']
+        @user_info = Models.load_class(data.dig('userInfo', '_type', '_name')).new(data.dig('userInfo')) if data['userInfo']
         @lifetime = data.dig('lifetime', '_value')
         @in_activity_identifier = data.dig('inActivityIdentifier', '_value').to_i
         @filename = data.dig('filename', '_value') if data['filename']
-        @payload_ref = Kernel.const_get("XCResult::Models::#{data.dig('payloadRef', '_type', '_name')}").new(data.dig('payloadRef')) if data['payloadRef']
+        @payload_ref = Models.load_class(data.dig('payloadRef', '_type', '_name')).new(data.dig('payloadRef')) if data['payloadRef']
         @payload_size = data.dig('payloadSize', '_value').to_i
       end
     end
@@ -370,7 +374,7 @@ module XCResult
       def initialize(data)
         @uuid = data.dig('uuid', '_value')
         @failure_reason = data.dig('failureReason', '_value') if data['failureReason']
-        @failure_summary = Kernel.const_get("XCResult::Models::#{data.dig('failureSummary', '_type', '_name')}").new(data.dig('failureSummary')) if data['failureSummary']
+        @failure_summary = Models.load_class(data.dig('failureSummary', '_type', '_name')).new(data.dig('failureSummary')) if data['failureSummary']
         @is_top_level_failure = data.dig('isTopLevelFailure', '_value')
       end
     end
@@ -424,9 +428,9 @@ module XCResult
         @uuid = data.dig('uuid', '_value')
         @issue_type = data.dig('issueType', '_value') if data['issueType']
         @detailed_description = data.dig('detailedDescription', '_value') if data['detailedDescription']
-        @attachments = (data.dig('attachments', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
-        @associated_error = Kernel.const_get("XCResult::Models::#{data.dig('associatedError', '_type', '_name')}").new(data.dig('associatedError')) if data['associatedError']
-        @source_code_context = Kernel.const_get("XCResult::Models::#{data.dig('sourceCodeContext', '_type', '_name')}").new(data.dig('sourceCodeContext')) if data['sourceCodeContext']
+        @attachments = (data.dig('attachments', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
+        @associated_error = Models.load_class(data.dig('associatedError', '_type', '_name')).new(data.dig('associatedError')) if data['associatedError']
+        @source_code_context = Models.load_class(data.dig('sourceCodeContext', '_type', '_name')).new(data.dig('sourceCodeContext')) if data['sourceCodeContext']
         @timestamp = Time.parse(data.dig('timestamp', '_value')) if data['timestamp']
         @is_top_level_failure = data.dig('isTopLevelFailure', '_value')
       end
@@ -474,7 +478,7 @@ module XCResult
       def initialize(data)
         @test_status = data.dig('testStatus', '_value')
         @duration = data.dig('duration', '_value').to_f if data['duration']
-        @summary_ref = Kernel.const_get("XCResult::Models::#{data.dig('summaryRef', '_type', '_name')}").new(data.dig('summaryRef')) if data['summaryRef']
+        @summary_ref = Models.load_class(data.dig('summaryRef', '_type', '_name')).new(data.dig('summaryRef')) if data['summaryRef']
         @performance_metrics_count = data.dig('performanceMetricsCount', '_value').to_i
         @failure_summaries_count = data.dig('failureSummariesCount', '_value').to_i
         @activity_summaries_count = data.dig('activitySummariesCount', '_value').to_i
@@ -565,7 +569,7 @@ module XCResult
       attr_reader :summaries
     
       def initialize(data)
-        @summaries = (data.dig('summaries', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
+        @summaries = (data.dig('summaries', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
       end
     end
 
@@ -579,7 +583,7 @@ module XCResult
       attr_reader :testable_summaries
     
       def initialize(data)
-        @testable_summaries = (data.dig('testableSummaries', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
+        @testable_summaries = (data.dig('testableSummaries', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
         super
       end
     end
@@ -638,12 +642,12 @@ module XCResult
       def initialize(data)
         @test_status = data.dig('testStatus', '_value')
         @duration = data.dig('duration', '_value').to_f
-        @performance_metrics = (data.dig('performanceMetrics', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
-        @failure_summaries = (data.dig('failureSummaries', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
-        @expected_failures = (data.dig('expectedFailures', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
-        @skip_notice_summary = Kernel.const_get("XCResult::Models::#{data.dig('skipNoticeSummary', '_type', '_name')}").new(data.dig('skipNoticeSummary')) if data['skipNoticeSummary']
-        @activity_summaries = (data.dig('activitySummaries', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
-        @repetition_policy_summary = Kernel.const_get("XCResult::Models::#{data.dig('repetitionPolicySummary', '_type', '_name')}").new(data.dig('repetitionPolicySummary')) if data['repetitionPolicySummary']
+        @performance_metrics = (data.dig('performanceMetrics', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
+        @failure_summaries = (data.dig('failureSummaries', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
+        @expected_failures = (data.dig('expectedFailures', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
+        @skip_notice_summary = Models.load_class(data.dig('skipNoticeSummary', '_type', '_name')).new(data.dig('skipNoticeSummary')) if data['skipNoticeSummary']
+        @activity_summaries = (data.dig('activitySummaries', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
+        @repetition_policy_summary = Models.load_class(data.dig('repetitionPolicySummary', '_type', '_name')).new(data.dig('repetitionPolicySummary')) if data['repetitionPolicySummary']
         super
       end
     end
@@ -662,7 +666,7 @@ module XCResult
     
       def initialize(data)
         @duration = data.dig('duration', '_value').to_f
-        @subtests = (data.dig('subtests', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
+        @subtests = (data.dig('subtests', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
         super
       end
     end
@@ -701,9 +705,9 @@ module XCResult
         @project_relative_path = data.dig('projectRelativePath', '_value') if data['projectRelativePath']
         @target_name = data.dig('targetName', '_value') if data['targetName']
         @test_kind = data.dig('testKind', '_value') if data['testKind']
-        @tests = (data.dig('tests', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
+        @tests = (data.dig('tests', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
         @diagnostics_directory_name = data.dig('diagnosticsDirectoryName', '_value') if data['diagnosticsDirectoryName']
-        @failure_summaries = (data.dig('failureSummaries', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
+        @failure_summaries = (data.dig('failureSummaries', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
         @test_language = data.dig('testLanguage', '_value') if data['testLanguage']
         @test_region = data.dig('testRegion', '_value') if data['testRegion']
         super
@@ -727,7 +731,7 @@ module XCResult
       def initialize(data)
         @creating_workspace_file_path = data.dig('creatingWorkspaceFilePath', '_value')
         @unique_identifier = data.dig('uniqueIdentifier', '_value')
-        @scheme_identifier = Kernel.const_get("XCResult::Models::#{data.dig('schemeIdentifier', '_type', '_name')}").new(data.dig('schemeIdentifier')) if data['schemeIdentifier']
+        @scheme_identifier = Models.load_class(data.dig('schemeIdentifier', '_type', '_name')).new(data.dig('schemeIdentifier')) if data['schemeIdentifier']
       end
     end
 
@@ -752,11 +756,11 @@ module XCResult
       attr_reader :archive
     
       def initialize(data)
-        @metadata_ref = Kernel.const_get("XCResult::Models::#{data.dig('metadataRef', '_type', '_name')}").new(data.dig('metadataRef')) if data['metadataRef']
-        @metrics = Kernel.const_get("XCResult::Models::#{data.dig('metrics', '_type', '_name')}").new(data.dig('metrics'))
-        @issues = Kernel.const_get("XCResult::Models::#{data.dig('issues', '_type', '_name')}").new(data.dig('issues'))
-        @actions = (data.dig('actions', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
-        @archive = Kernel.const_get("XCResult::Models::#{data.dig('archive', '_type', '_name')}").new(data.dig('archive')) if data['archive']
+        @metadata_ref = Models.load_class(data.dig('metadataRef', '_type', '_name')).new(data.dig('metadataRef')) if data['metadataRef']
+        @metrics = Models.load_class(data.dig('metrics', '_type', '_name')).new(data.dig('metrics'))
+        @issues = Models.load_class(data.dig('issues', '_type', '_name')).new(data.dig('issues'))
+        @actions = (data.dig('actions', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
+        @archive = Models.load_class(data.dig('archive', '_type', '_name')).new(data.dig('archive')) if data['archive']
       end
     end
 
@@ -793,9 +797,9 @@ module XCResult
     
       def initialize(data)
         @title = data.dig('title', '_value')
-        @start_location = Kernel.const_get("XCResult::Models::#{data.dig('startLocation', '_type', '_name')}").new(data.dig('startLocation')) if data['startLocation']
-        @end_location = Kernel.const_get("XCResult::Models::#{data.dig('endLocation', '_type', '_name')}").new(data.dig('endLocation')) if data['endLocation']
-        @edges = (data.dig('edges', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
+        @start_location = Models.load_class(data.dig('startLocation', '_type', '_name')).new(data.dig('startLocation')) if data['startLocation']
+        @end_location = Models.load_class(data.dig('endLocation', '_type', '_name')).new(data.dig('endLocation')) if data['endLocation']
+        @edges = (data.dig('edges', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
         super
       end
     end
@@ -812,8 +816,8 @@ module XCResult
       attr_reader :end_location
     
       def initialize(data)
-        @start_location = Kernel.const_get("XCResult::Models::#{data.dig('startLocation', '_type', '_name')}").new(data.dig('startLocation')) if data['startLocation']
-        @end_location = Kernel.const_get("XCResult::Models::#{data.dig('endLocation', '_type', '_name')}").new(data.dig('endLocation')) if data['endLocation']
+        @start_location = Models.load_class(data.dig('startLocation', '_type', '_name')).new(data.dig('startLocation')) if data['startLocation']
+        @end_location = Models.load_class(data.dig('endLocation', '_type', '_name')).new(data.dig('endLocation')) if data['endLocation']
       end
     end
 
@@ -837,7 +841,7 @@ module XCResult
     
       def initialize(data)
         @title = data.dig('title', '_value')
-        @location = Kernel.const_get("XCResult::Models::#{data.dig('location', '_type', '_name')}").new(data.dig('location')) if data['location']
+        @location = Models.load_class(data.dig('location', '_type', '_name')).new(data.dig('location')) if data['location']
         @description = data.dig('description', '_value')
         @call_depth = data.dig('callDepth', '_value').to_i
         super
@@ -872,8 +876,8 @@ module XCResult
         @title = data.dig('title', '_value')
         @short_title = data.dig('shortTitle', '_value') if data['shortTitle']
         @category = data.dig('category', '_value') if data['category']
-        @location = Kernel.const_get("XCResult::Models::#{data.dig('location', '_type', '_name')}").new(data.dig('location')) if data['location']
-        @annotations = (data.dig('annotations', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
+        @location = Models.load_class(data.dig('location', '_type', '_name')).new(data.dig('location')) if data['location']
+        @annotations = (data.dig('annotations', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
       end
     end
 
@@ -893,7 +897,7 @@ module XCResult
       attr_reader :key_event_index
     
       def initialize(data)
-        @steps = (data.dig('steps', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
+        @steps = (data.dig('steps', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
         @result_type = data.dig('resultType', '_value') if data['resultType']
         @key_event_index = data.dig('keyEventIndex', '_value').to_i
         super
@@ -945,9 +949,9 @@ module XCResult
         @start_time = Time.parse(data.dig('startTime', '_value')) if data['startTime']
         @duration = data.dig('duration', '_value').to_f
         @result = data.dig('result', '_value') if data['result']
-        @location = Kernel.const_get("XCResult::Models::#{data.dig('location', '_type', '_name')}").new(data.dig('location')) if data['location']
-        @subsections = (data.dig('subsections', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
-        @messages = (data.dig('messages', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
+        @location = Models.load_class(data.dig('location', '_type', '_name')).new(data.dig('location')) if data['location']
+        @subsections = (data.dig('subsections', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
+        @messages = (data.dig('messages', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
       end
     end
 
@@ -1002,7 +1006,7 @@ module XCResult
     
       def initialize(data)
         @title = data.dig('title', '_value')
-        @location = Kernel.const_get("XCResult::Models::#{data.dig('location', '_type', '_name')}").new(data.dig('location')) if data['location']
+        @location = Models.load_class(data.dig('location', '_type', '_name')).new(data.dig('location')) if data['location']
       end
     end
 
@@ -1113,8 +1117,8 @@ module XCResult
     
       def initialize(data)
         @has_coverage_data = data.dig('hasCoverageData', '_value')
-        @report_ref = Kernel.const_get("XCResult::Models::#{data.dig('reportRef', '_type', '_name')}").new(data.dig('reportRef')) if data['reportRef']
-        @archive_ref = Kernel.const_get("XCResult::Models::#{data.dig('archiveRef', '_type', '_name')}").new(data.dig('archiveRef')) if data['archiveRef']
+        @report_ref = Models.load_class(data.dig('reportRef', '_type', '_name')).new(data.dig('reportRef')) if data['reportRef']
+        @archive_ref = Models.load_class(data.dig('archiveRef', '_type', '_name')).new(data.dig('archiveRef')) if data['archiveRef']
       end
     end
 
@@ -1205,7 +1209,7 @@ module XCResult
         @issue_type = data.dig('issueType', '_value')
         @message = data.dig('message', '_value')
         @producing_target = data.dig('producingTarget', '_value') if data['producingTarget']
-        @document_location_in_creating_workspace = Kernel.const_get("XCResult::Models::#{data.dig('documentLocationInCreatingWorkspace', '_type', '_name')}").new(data.dig('documentLocationInCreatingWorkspace')) if data['documentLocationInCreatingWorkspace']
+        @document_location_in_creating_workspace = Models.load_class(data.dig('documentLocationInCreatingWorkspace', '_type', '_name')).new(data.dig('documentLocationInCreatingWorkspace')) if data['documentLocationInCreatingWorkspace']
       end
     end
 
@@ -1235,7 +1239,7 @@ module XCResult
     
       def initialize(data)
         @id = data.dig('id', '_value')
-        @target_type = Kernel.const_get("XCResult::Models::#{data.dig('targetType', '_type', '_name')}").new(data.dig('targetType')) if data['targetType']
+        @target_type = Models.load_class(data.dig('targetType', '_type', '_name')).new(data.dig('targetType')) if data['targetType']
       end
     end
 
@@ -1257,10 +1261,10 @@ module XCResult
       attr_reader :warning_summaries
     
       def initialize(data)
-        @analyzer_warning_summaries = (data.dig('analyzerWarningSummaries', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
-        @error_summaries = (data.dig('errorSummaries', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
-        @test_failure_summaries = (data.dig('testFailureSummaries', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
-        @warning_summaries = (data.dig('warningSummaries', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
+        @analyzer_warning_summaries = (data.dig('analyzerWarningSummaries', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
+        @error_summaries = (data.dig('errorSummaries', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
+        @test_failure_summaries = (data.dig('testFailureSummaries', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
+        @warning_summaries = (data.dig('warningSummaries', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
       end
     end
 
@@ -1306,7 +1310,7 @@ module XCResult
       attr_reader :storage
     
       def initialize(data)
-        @storage = (data.dig('storage', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
+        @storage = (data.dig('storage', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
       end
     end
 
@@ -1339,8 +1343,8 @@ module XCResult
       attr_reader :call_stack
     
       def initialize(data)
-        @location = Kernel.const_get("XCResult::Models::#{data.dig('location', '_type', '_name')}").new(data.dig('location')) if data['location']
-        @call_stack = (data.dig('callStack', '_values') || []).map {|d| Kernel.const_get("XCResult::Models::#{d.dig('_type', '_name')}").new(d) }
+        @location = Models.load_class(data.dig('location', '_type', '_name')).new(data.dig('location')) if data['location']
+        @call_stack = (data.dig('callStack', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
       end
     end
 
@@ -1357,7 +1361,7 @@ module XCResult
     
       def initialize(data)
         @address_string = data.dig('addressString', '_value') if data['addressString']
-        @symbol_info = Kernel.const_get("XCResult::Models::#{data.dig('symbolInfo', '_type', '_name')}").new(data.dig('symbolInfo')) if data['symbolInfo']
+        @symbol_info = Models.load_class(data.dig('symbolInfo', '_type', '_name')).new(data.dig('symbolInfo')) if data['symbolInfo']
       end
     end
 
@@ -1395,7 +1399,7 @@ module XCResult
       def initialize(data)
         @image_name = data.dig('imageName', '_value') if data['imageName']
         @symbol_name = data.dig('symbolName', '_value') if data['symbolName']
-        @location = Kernel.const_get("XCResult::Models::#{data.dig('location', '_type', '_name')}").new(data.dig('location')) if data['location']
+        @location = Models.load_class(data.dig('location', '_type', '_name')).new(data.dig('location')) if data['location']
       end
     end
 
@@ -1424,7 +1428,7 @@ module XCResult
       def initialize(data)
         @domain = data.dig('domain', '_value') if data['domain']
         @code = data.dig('code', '_value').to_i if data['code']
-        @user_info = Kernel.const_get("XCResult::Models::#{data.dig('userInfo', '_type', '_name')}").new(data.dig('userInfo')) if data['userInfo']
+        @user_info = Models.load_class(data.dig('userInfo', '_type', '_name')).new(data.dig('userInfo')) if data['userInfo']
       end
     end
 
@@ -1456,7 +1460,7 @@ module XCResult
     
       def initialize(data)
         @name = data.dig('name', '_value')
-        @supertype = Kernel.const_get("XCResult::Models::#{data.dig('supertype', '_type', '_name')}").new(data.dig('supertype')) if data['supertype']
+        @supertype = Models.load_class(data.dig('supertype', '_type', '_name')).new(data.dig('supertype')) if data['supertype']
       end
     end
 
