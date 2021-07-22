@@ -71,5 +71,13 @@ module XCResult
         new_message
       end
     end
+
+    class Reference
+      # @param from [String] a file path of .xcresult to load
+      def load_object(from:)
+        data = JSON.parse(`xcrun xcresulttool get --path #{from} --id '#{id}' --format json`)
+        Models.load_class(target_type.name).new(data)
+      end
+    end
   end
 end

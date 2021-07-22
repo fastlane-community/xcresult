@@ -23,16 +23,10 @@ module XCResult
       test_refs = actions_invocation_record.actions.map do |action|
         action.action_result.tests_ref
       end.compact
-      ids = test_refs.map(&:id)
 
       # Maps ids into ActionTestPlanRunSummaries by executing xcresulttool to get JSON
       # containing specific information for each test summary
-      @action_test_plan_summaries = ids.map do |id|
-        raw = execute_cmd("xcrun xcresulttool get --format json --path #{path} --id #{id}")
-        json = JSON.parse(raw)
-        XCResult::Models::ActionTestPlanRunSummaries.new(json)
-      end
-
+      @action_test_plan_summaries = test_refs.map { |ref| ref.load_object(from: path) }
       @action_test_plan_summaries
     end
 
