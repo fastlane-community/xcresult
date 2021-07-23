@@ -26,7 +26,7 @@ Or install it yourself as:
 
 - [x] Allow for easy querying of test plan summaires
 - [x] Allow for easy exporting of `.xccovreport` files
-- [ ] Allow for exporting of screenshots
+- [x] Allow for exporting of screenshots
 - [ ] Add full documentation on all classes and methods
 - [ ] Add more and better explain examples
 - [ ] Add tests and improved code coverage
@@ -45,6 +45,13 @@ export_xccovreport_paths = parser.export_xccovreports(destination: './outputs')
 ```rb
 parser = XCResult::Parser.new(path: 'YourProject.xcresult')
 summaries = parser.action_test_plan_summaries
+```
+
+### Export screenshots
+
+```rb
+parser = XCResult::Parser.new(path: 'YourProject.xcresult')
+parser = parser.export_screenshots(destination: './screenshots', by_device: true, by_locale: true)
 ```
 
 ## Development
