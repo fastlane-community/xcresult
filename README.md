@@ -51,7 +51,7 @@ summaries = parser.action_test_plan_summaries
 
 ```rb
 parser = XCResult::Parser.new(path: 'YourProject.xcresult')
-parser = parser.export_screenshots(destination: './screenshots', by_device: true, by_locale: true)
+parser = parser.export_screenshots(XCResult::ExportOptions.new(destination: './screenshots', by_device: true, by_locale: true))
 ```
 
 ## Development
