@@ -4,6 +4,8 @@ require 'shellwords'
 require 'json'
 require 'fileutils'
 
+require_relative 'export_options'
+
 module XCResult
   class Parser
     attr_accessor :path, :result_bundle_json, :actions_invocation_record
@@ -69,7 +71,7 @@ module XCResult
       end
     end
 
-    def export_screenshots(destination: Dir.pwd, by_device: false, by_locale: false)
+    def export_screenshots(options = XCResult::ExportOptions.new(destination: Dir.pwd))
       # Filter non test results; i.e build action
       actions = actions_invocation_record.actions.select {|x| x.action_result.tests_ref }
 
@@ -89,11 +91,10 @@ module XCResult
                                                .flat_map(&:attachments)
 
           # Prepare output directory for each tests
-          locale = [action_testable_summary.test_language, action_testable_summary.test_region].compact.join('_')
-          locale = 'UNKOWN' if locale.empty?
-          output_directory = destination
-          output_directory = File.join(output_directory, action.run_destination.target_device_record.model_name) if by_device
-          output_directory = File.join(output_directory, locale) if by_locale
+          output_directory = options.output_directory(
+            target_device_record: action.run_destination.target_device_record,
+            action_testable_summary: action_testable_summary
+          )
           FileUtils.mkdir_p(output_directory) unless Dir.exist?(output_directory)
 
           # Finally exports attachments
