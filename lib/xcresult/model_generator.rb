@@ -40,10 +40,6 @@ module XCResult
           module XCResult
             module Models
 
-              def self.load_class(class_name)
-                Kernel.const_get("XCResult::Models::\#{class_name}")
-              end
-
         OPEN_MODULE
 
         sorted_types.each do |type|

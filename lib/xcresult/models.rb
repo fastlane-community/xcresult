@@ -5,6 +5,10 @@ require 'xcresult/models.gen'
 # This file is meant to define extensions to generated models in models.gen.rb.
 module XCResult
   module Models
+    def self.load_class(class_name)
+      Kernel.const_get("XCResult::Models::#{class_name}")
+    end
+
     class ActionTestableSummary
       def all_tests
         tests.map(&:all_subtests).flatten

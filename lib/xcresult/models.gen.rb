@@ -1,5 +1,5 @@
 # This is a generated file. Don't modify this directly!
-# Last generated at: 2021-07-22 07:27:14 UTC
+# Last generated at: 2021-07-25 16:50:48 UTC
 #
 # Name: Xcode Result Types
 # Version: 3.30
@@ -8,10 +8,6 @@ require 'time'
 
 module XCResult
   module Models
-
-    def self.load_class(class_name)
-      Kernel.const_get("XCResult::Models::#{class_name}")
-    end
 
     # - ActionAbstractTestSummary
     #   * Kind: object
