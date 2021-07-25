@@ -78,30 +78,34 @@ module XCResult
       # Iterate through each action as it represents run destination (testing device)
       actions.each do |action|
         action_test_plan_run_summaries = action.action_result.tests_ref.load_object(from: path)
-        action_testable_summaries = action_test_plan_run_summaries.summaries.flat_map(&:testable_summaries)
+        action_test_plan_summaries = action_test_plan_run_summaries.summaries
 
-        # Iterate thorugh each action_testable_summary as it represents testing conditions such as region and language
-        action_testable_summaries.each do |action_testable_summary|
-          # Collect all attachments from a testing condition
-          attachments = action_testable_summary.all_tests
-                                               .map(&:summary_ref)
-                                               .map { |ref| ref.load_object(from: path) }
-                                               .flat_map(&:activity_summaries)
-                                               .flat_map(&:subactivities)
-                                               .flat_map(&:attachments)
+        # Iterate thorugh each action_test_plan_summaries as it represents test name
+        action_test_plan_summaries.each do |action_test_plan_summary|
+          # Iterate thorugh each action_testable_summary as it represents testing conditions such as region and language
+          action_test_plan_summary.testable_summaries.each do |action_testable_summary|
+            # Collect all attachments from a testing condition
+            attachments = action_testable_summary.all_tests
+                                                 .map(&:summary_ref)
+                                                 .map { |ref| ref.load_object(from: path) }
+                                                 .flat_map(&:activity_summaries)
+                                                 .flat_map(&:subactivities)
+                                                 .flat_map(&:attachments)
 
-          # Prepare output directory for each tests
-          output_directory = options.output_directory(
-            target_device_record: action.run_destination.target_device_record,
-            action_testable_summary: action_testable_summary
-          )
-          FileUtils.mkdir_p(output_directory) unless Dir.exist?(output_directory)
+            # Prepare output directory for each tests
+            output_directory = options.output_directory(
+              target_device_record: action.run_destination.target_device_record,
+              action_test_plan_summary: action_test_plan_summary,
+              action_testable_summary: action_testable_summary
+            )
+            FileUtils.mkdir_p(output_directory) unless Dir.exist?(output_directory)
 
-          # Finally exports attachments
-          attachments.each do |attachment|
-            output_path = File.join(output_directory, attachment.filename)
-            cmd = "xcrun xcresulttool export --path #{path} --id '#{attachment.payload_ref.id}' --output-path '#{output_path}' --type file"
-            execute_cmd(cmd)
+            # Finally exports attachments
+            attachments.each do |attachment|
+              output_path = File.join(output_directory, attachment.filename)
+              cmd = "xcrun xcresulttool export --path #{path} --id '#{attachment.payload_ref.id}' --output-path '#{output_path}' --type file"
+              execute_cmd(cmd)
+            end
           end
         end
       end
