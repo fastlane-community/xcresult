@@ -7,7 +7,7 @@ require 'tsort'
 module XCResult
   class ModelGenerator
     def self.format_description
-      `xcrun xcresulttool formatDescription get`
+      `xcrun xcresulttool formatDescription get --format json`
     end
 
     def self.generate(destination)
@@ -29,9 +29,9 @@ module XCResult
           # This is a generated file. Don't modify this directly!
           # Last generated at: #{Time.now.utc}
           #
-          # #{@format.name}
-          # #{@format.version}
-          # #{@format.signature}
+          # Name: #{@format.name}
+          # Version: #{@format.version}
+          # Signature: #{@format.signature}
           require 'time'
 
         HEADER
@@ -66,7 +66,6 @@ module XCResult
 
       def compose_type(type, indentation)
         type_def = <<~"TYPE"
-          <%= type.raw_text.each_line.map { |line| '# ' + line[2..-1] }.join %>
           <% if type.supertype %>
           class <%= type.name %> < <%= type.supertype %>
           <% else %>
@@ -79,7 +78,7 @@ module XCResult
 
             def initialize(data)
           <% type.properties.each do |property| %>
-              @<%= property.name_in_snake_case %> = <%= property.mapping(type_to_kind[property.main_type], 'data') %>
+              @<%= property.name_in_snake_case %> = <%= property.mapping(type_to_kind[property.wrapped_type || property.type], 'data') %>
           <% end %>
           <% if type.supertype %>
               super
@@ -97,68 +96,40 @@ module XCResult
 
       def initialize(format:)
         @raw_format = format
-        @lines = format.each_line.to_a
+        @json = JSON.parse(format)
         @format = Format.new
       end
 
       def parse
-        @format.name = @lines.shift.chomp
-        @format.version = @lines.shift.chomp
-        @format.signature = @lines.shift.chomp
+        @format.name = @json['name']
+        @format.version = @json['version'].values.join('.')
+        @format.signature = @json['signature']
+        @format.types = @json['types'].map do |type|
+          # We use Ruby native classes for values, like Date, String, Int, Double, etc..
+          next if type['kind'] == 'value'
 
-        # Drop "- Types" lines
-        @lines.shift
-
-        # Parsing Types
-        types = []
-        type = nil
-
-        until @lines.empty?
-          line = @lines.shift
-          case line
-          when /\s*-\s+(.*)$/
-            types << type if type
-            type = Type.new(name: Regexp.last_match(1), raw_text: line, properties: [])
-          when /\s*\*\s*Supertype: (.*)$/
-            type.supertype = Regexp.last_match(1)
-            type.raw_text << line
-          when /\s*\*\s*Kind: (.*)$/
-            type.kind = Regexp.last_match(1)
-            type.raw_text << line
-          when /\s*\*\s*Properties:$/
-            type.raw_text << line
-            parse_properties(type)
-          end
-        end
-
-        types << type if type
-        @format.types = types
-      end
-
-      def parse_properties(type)
-        while @lines.first =~ /\s*\+\s(?<name>.*):\s*(?<type>.*)$/
-          optional = false
-          array = false
-          parsed_name = Regexp.last_match[:name]
-          parsed_type = Regexp.last_match[:type]
-          main_type = parsed_type
-
-          if parsed_type =~ /^\[(.*)\]$/
-            array = true
-            main_type = Regexp.last_match[1]
-          elsif parsed_type =~ /^(.*)\?$/
-            optional = true
-            main_type = Regexp.last_match[1]
-          end
-          type.properties << Property.new(name: parsed_name, type: parsed_type, main_type: main_type, optional: optional, array: array)
-          type.raw_text << @lines.shift
-        end
+          Type.new(
+            name: type.dig('type', 'name'),
+            supertype: type.dig('type', 'supertype'),
+            kind: type['kind'],
+            raw_text: JSON.pretty_generate(type),
+            properties: type.fetch('properties', []).map do |prop|
+              Property.new(
+                name: prop['name'],
+                type: prop['type'],
+                wrapped_type: prop['wrappedType'],
+                is_optional: prop['isOptional'],
+                is_internal: prop['isInternal']
+              )
+            end
+          )
+        end.compact
       end
     end
 
     Format = Struct.new(:name, :version, :signature, :types, keyword_init: true)
     Type = Struct.new(:name, :supertype, :kind, :properties, :raw_text, keyword_init: true)
-    Property = Struct.new(:name, :type, :main_type, :optional, :array, keyword_init: true) do
+    Property = Struct.new(:name, :type, :wrapped_type, :is_optional, :is_internal, keyword_init: true) do
       def name_in_snake_case
         name
           .gsub(/(CPU|ID|MHz|UTI|SDK)/) { Regexp.last_match[1].downcase.capitalize } # normalize acronyms
@@ -167,21 +138,21 @@ module XCResult
       end
 
       def mapping(kind, variable_name)
-        return "(#{variable_name}.dig('#{name}', '_values') || []).map {|d| #{_mapping(kind, 'd')} }" if array
+        return "(#{variable_name}.dig('#{name}', '_values') || []).map {|d| #{_mapping(kind, 'd')} }" if type == 'Array'
 
-        _mapping(kind, variable_name) + (optional ? " if #{variable_name}['#{name}']" : '')
+        _mapping(kind, variable_name) + (is_optional ? " if #{variable_name}['#{name}']" : '')
       end
 
       def _mapping(kind, variable_name)
         if kind == 'object'
-          type_access_key = array ? "'_type', '_name'" : "'#{name}', '_type', '_name'"
-          value_access_key = array ? variable_name : "#{variable_name}.dig('#{name}')"
+          type_access_key = type == 'Array' ? "'_type', '_name'" : "'#{name}', '_type', '_name'"
+          value_access_key = type == 'Array' ? variable_name : "#{variable_name}.dig('#{name}')"
           "Models.load_class(#{variable_name}.dig(#{type_access_key})).new(#{value_access_key})"
-        elsif kind == 'value' && main_type == 'Date'
+        elsif kind == 'value' && [type, wrapped_type].include?('Date')
           "Time.parse(#{variable_name}.dig('#{name}', '_value'))"
-        elsif kind == 'value' && main_type == 'Int'
+        elsif kind == 'value' && [type, wrapped_type].include?('Int')
           "#{variable_name}.dig('#{name}', '_value').to_i"
-        elsif kind == 'value' && main_type == 'Double'
+        elsif kind == 'value' && [type, wrapped_type].include?('Double')
           "#{variable_name}.dig('#{name}', '_value').to_f"
         else
           "#{variable_name}.dig('#{name}', '_value')"
@@ -189,12 +160,12 @@ module XCResult
       end
 
       def rdoc_comment
-        if array
-          "# @return [Array<#{main_type}>] #{name}"
-        elsif optional
-          "# @return [#{main_type}, nil] #{name}"
+        if type == 'Array'
+          "# @return [Array<#{wrapped_type}>] #{name_in_snake_case}"
+        elsif is_optional
+          "# @return [#{wrapped_type}, nil] #{name_in_snake_case}"
         else
-          "# @return [#{main_type}] #{name}"
+          "# @return [#{type}] #{name_in_snake_case}"
         end
       end
     end
