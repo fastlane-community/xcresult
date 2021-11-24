@@ -1,18 +1,14 @@
 # This is a generated file. Don't modify this directly!
-# Last generated at: 2021-07-25 16:50:48 UTC
+# Last generated at: 2021-11-24 04:47:30 UTC
 #
 # Name: Xcode Result Types
-# Version: 3.30
-# Signature: Vu9Uty9iL1U=
+# Version: 3.34
+# Signature: GSHghHjCrb8=
 require 'time'
 
 module XCResult
   module Models
 
-    # - ActionAbstractTestSummary
-    #   * Kind: object
-    #   * Properties:
-    #     + name: String?
     class ActionAbstractTestSummary
       # @return [String, nil] name
       attr_reader :name
@@ -22,63 +18,42 @@ module XCResult
       end
     end
 
-    # - ActionDeviceRecord
-    #   * Kind: object
-    #   * Properties:
-    #     + name: String
-    #     + isConcreteDevice: Bool
-    #     + operatingSystemVersion: String
-    #     + operatingSystemVersionWithBuildNumber: String
-    #     + nativeArchitecture: String
-    #     + modelName: String
-    #     + modelCode: String
-    #     + modelUTI: String
-    #     + identifier: String
-    #     + isWireless: Bool
-    #     + cpuKind: String
-    #     + cpuCount: Int?
-    #     + cpuSpeedInMHz: Int?
-    #     + busSpeedInMHz: Int?
-    #     + ramSizeInMegabytes: Int?
-    #     + physicalCPUCoresPerPackage: Int?
-    #     + logicalCPUCoresPerPackage: Int?
-    #     + platformRecord: ActionPlatformRecord
     class ActionDeviceRecord
       # @return [String] name
       attr_reader :name
-      # @return [Bool] isConcreteDevice
+      # @return [Bool] is_concrete_device
       attr_reader :is_concrete_device
-      # @return [String] operatingSystemVersion
+      # @return [String] operating_system_version
       attr_reader :operating_system_version
-      # @return [String] operatingSystemVersionWithBuildNumber
+      # @return [String] operating_system_version_with_build_number
       attr_reader :operating_system_version_with_build_number
-      # @return [String] nativeArchitecture
+      # @return [String] native_architecture
       attr_reader :native_architecture
-      # @return [String] modelName
+      # @return [String] model_name
       attr_reader :model_name
-      # @return [String] modelCode
+      # @return [String] model_code
       attr_reader :model_code
-      # @return [String] modelUTI
+      # @return [String] model_uti
       attr_reader :model_uti
       # @return [String] identifier
       attr_reader :identifier
-      # @return [Bool] isWireless
+      # @return [Bool] is_wireless
       attr_reader :is_wireless
-      # @return [String] cpuKind
+      # @return [String] cpu_kind
       attr_reader :cpu_kind
-      # @return [Int, nil] cpuCount
+      # @return [Int, nil] cpu_count
       attr_reader :cpu_count
-      # @return [Int, nil] cpuSpeedInMHz
+      # @return [Int, nil] cpu_speed_in_mhz
       attr_reader :cpu_speed_in_mhz
-      # @return [Int, nil] busSpeedInMHz
+      # @return [Int, nil] bus_speed_in_mhz
       attr_reader :bus_speed_in_mhz
-      # @return [Int, nil] ramSizeInMegabytes
+      # @return [Int, nil] ram_size_in_megabytes
       attr_reader :ram_size_in_megabytes
-      # @return [Int, nil] physicalCPUCoresPerPackage
+      # @return [Int, nil] physical_cpu_cores_per_package
       attr_reader :physical_cpu_cores_per_package
-      # @return [Int, nil] logicalCPUCoresPerPackage
+      # @return [Int, nil] logical_cpu_cores_per_package
       attr_reader :logical_cpu_cores_per_package
-      # @return [ActionPlatformRecord] platformRecord
+      # @return [ActionPlatformRecord] platform_record
       attr_reader :platform_record
     
       def initialize(data)
@@ -93,25 +68,20 @@ module XCResult
         @identifier = data.dig('identifier', '_value')
         @is_wireless = data.dig('isWireless', '_value')
         @cpu_kind = data.dig('cpuKind', '_value')
-        @cpu_count = data.dig('cpuCount', '_value').to_i if data['cpuCount']
-        @cpu_speed_in_mhz = data.dig('cpuSpeedInMHz', '_value').to_i if data['cpuSpeedInMHz']
-        @bus_speed_in_mhz = data.dig('busSpeedInMHz', '_value').to_i if data['busSpeedInMHz']
-        @ram_size_in_megabytes = data.dig('ramSizeInMegabytes', '_value').to_i if data['ramSizeInMegabytes']
-        @physical_cpu_cores_per_package = data.dig('physicalCPUCoresPerPackage', '_value').to_i if data['physicalCPUCoresPerPackage']
-        @logical_cpu_cores_per_package = data.dig('logicalCPUCoresPerPackage', '_value').to_i if data['logicalCPUCoresPerPackage']
+        @cpu_count = data.dig('cpuCount', '_value') if data['cpuCount']
+        @cpu_speed_in_mhz = data.dig('cpuSpeedInMHz', '_value') if data['cpuSpeedInMHz']
+        @bus_speed_in_mhz = data.dig('busSpeedInMHz', '_value') if data['busSpeedInMHz']
+        @ram_size_in_megabytes = data.dig('ramSizeInMegabytes', '_value') if data['ramSizeInMegabytes']
+        @physical_cpu_cores_per_package = data.dig('physicalCPUCoresPerPackage', '_value') if data['physicalCPUCoresPerPackage']
+        @logical_cpu_cores_per_package = data.dig('logicalCPUCoresPerPackage', '_value') if data['logicalCPUCoresPerPackage']
         @platform_record = Models.load_class(data.dig('platformRecord', '_type', '_name')).new(data.dig('platformRecord'))
       end
     end
 
-    # - ActionPlatformRecord
-    #   * Kind: object
-    #   * Properties:
-    #     + identifier: String
-    #     + userDescription: String
     class ActionPlatformRecord
       # @return [String] identifier
       attr_reader :identifier
-      # @return [String] userDescription
+      # @return [String] user_description
       attr_reader :user_description
     
       def initialize(data)
@@ -120,61 +90,38 @@ module XCResult
       end
     end
 
-    # - ActionRecord
-    #   * Kind: object
-    #   * Properties:
-    #     + schemeCommandName: String
-    #     + schemeTaskName: String
-    #     + title: String?
-    #     + startedTime: Date
-    #     + endedTime: Date
-    #     + runDestination: ActionRunDestinationRecord
-    #     + buildResult: ActionResult
-    #     + actionResult: ActionResult
     class ActionRecord
-      # @return [String] schemeCommandName
+      # @return [String] scheme_command_name
       attr_reader :scheme_command_name
-      # @return [String] schemeTaskName
+      # @return [String] scheme_task_name
       attr_reader :scheme_task_name
       # @return [String, nil] title
       attr_reader :title
-      # @return [Date] startedTime
+      # @return [Date] started_time
       attr_reader :started_time
-      # @return [Date] endedTime
+      # @return [Date] ended_time
       attr_reader :ended_time
-      # @return [ActionRunDestinationRecord] runDestination
+      # @return [ActionRunDestinationRecord] run_destination
       attr_reader :run_destination
-      # @return [ActionResult] buildResult
+      # @return [ActionResult] build_result
       attr_reader :build_result
-      # @return [ActionResult] actionResult
+      # @return [ActionResult] action_result
       attr_reader :action_result
     
       def initialize(data)
         @scheme_command_name = data.dig('schemeCommandName', '_value')
         @scheme_task_name = data.dig('schemeTaskName', '_value')
         @title = data.dig('title', '_value') if data['title']
-        @started_time = Time.parse(data.dig('startedTime', '_value'))
-        @ended_time = Time.parse(data.dig('endedTime', '_value'))
+        @started_time = data.dig('startedTime', '_value')
+        @ended_time = data.dig('endedTime', '_value')
         @run_destination = Models.load_class(data.dig('runDestination', '_type', '_name')).new(data.dig('runDestination'))
         @build_result = Models.load_class(data.dig('buildResult', '_type', '_name')).new(data.dig('buildResult'))
         @action_result = Models.load_class(data.dig('actionResult', '_type', '_name')).new(data.dig('actionResult'))
       end
     end
 
-    # - ActionResult
-    #   * Kind: object
-    #   * Properties:
-    #     + resultName: String
-    #     + status: String
-    #     + metrics: ResultMetrics
-    #     + issues: ResultIssueSummaries
-    #     + coverage: CodeCoverageInfo
-    #     + timelineRef: Reference?
-    #     + logRef: Reference?
-    #     + testsRef: Reference?
-    #     + diagnosticsRef: Reference?
     class ActionResult
-      # @return [String] resultName
+      # @return [String] result_name
       attr_reader :result_name
       # @return [String] status
       attr_reader :status
@@ -184,13 +131,13 @@ module XCResult
       attr_reader :issues
       # @return [CodeCoverageInfo] coverage
       attr_reader :coverage
-      # @return [Reference, nil] timelineRef
+      # @return [Reference, nil] timeline_ref
       attr_reader :timeline_ref
-      # @return [Reference, nil] logRef
+      # @return [Reference, nil] log_ref
       attr_reader :log_ref
-      # @return [Reference, nil] testsRef
+      # @return [Reference, nil] tests_ref
       attr_reader :tests_ref
-      # @return [Reference, nil] diagnosticsRef
+      # @return [Reference, nil] diagnostics_ref
       attr_reader :diagnostics_ref
     
       def initialize(data)
@@ -206,24 +153,16 @@ module XCResult
       end
     end
 
-    # - ActionRunDestinationRecord
-    #   * Kind: object
-    #   * Properties:
-    #     + displayName: String
-    #     + targetArchitecture: String
-    #     + targetDeviceRecord: ActionDeviceRecord
-    #     + localComputerRecord: ActionDeviceRecord
-    #     + targetSDKRecord: ActionSDKRecord
     class ActionRunDestinationRecord
-      # @return [String] displayName
+      # @return [String] display_name
       attr_reader :display_name
-      # @return [String] targetArchitecture
+      # @return [String] target_architecture
       attr_reader :target_architecture
-      # @return [ActionDeviceRecord] targetDeviceRecord
+      # @return [ActionDeviceRecord] target_device_record
       attr_reader :target_device_record
-      # @return [ActionDeviceRecord] localComputerRecord
+      # @return [ActionDeviceRecord] local_computer_record
       attr_reader :local_computer_record
-      # @return [ActionSDKRecord] targetSDKRecord
+      # @return [ActionSDKRecord] target_sdk_record
       attr_reader :target_sdk_record
     
       def initialize(data)
@@ -235,21 +174,14 @@ module XCResult
       end
     end
 
-    # - ActionSDKRecord
-    #   * Kind: object
-    #   * Properties:
-    #     + name: String
-    #     + identifier: String
-    #     + operatingSystemVersion: String
-    #     + isInternal: Bool
     class ActionSDKRecord
       # @return [String] name
       attr_reader :name
       # @return [String] identifier
       attr_reader :identifier
-      # @return [String] operatingSystemVersion
+      # @return [String] operating_system_version
       attr_reader :operating_system_version
-      # @return [Bool] isInternal
+      # @return [Bool] is_internal
       attr_reader :is_internal
     
       def initialize(data)
@@ -260,22 +192,10 @@ module XCResult
       end
     end
 
-    # - ActionTestActivitySummary
-    #   * Kind: object
-    #   * Properties:
-    #     + title: String
-    #     + activityType: String
-    #     + uuid: String
-    #     + start: Date?
-    #     + finish: Date?
-    #     + attachments: [ActionTestAttachment]
-    #     + subactivities: [ActionTestActivitySummary]
-    #     + failureSummaryIDs: [String]
-    #     + expectedFailureIDs: [String]
     class ActionTestActivitySummary
       # @return [String] title
       attr_reader :title
-      # @return [String] activityType
+      # @return [String] activity_type
       attr_reader :activity_type
       # @return [String] uuid
       attr_reader :uuid
@@ -287,17 +207,17 @@ module XCResult
       attr_reader :attachments
       # @return [Array<ActionTestActivitySummary>] subactivities
       attr_reader :subactivities
-      # @return [Array<String>] failureSummaryIDs
+      # @return [Array<String>] failure_summary_ids
       attr_reader :failure_summary_ids
-      # @return [Array<String>] expectedFailureIDs
+      # @return [Array<String>] expected_failure_ids
       attr_reader :expected_failure_ids
     
       def initialize(data)
         @title = data.dig('title', '_value')
         @activity_type = data.dig('activityType', '_value')
         @uuid = data.dig('uuid', '_value')
-        @start = Time.parse(data.dig('start', '_value')) if data['start']
-        @finish = Time.parse(data.dig('finish', '_value')) if data['finish']
+        @start = data.dig('start', '_value') if data['start']
+        @finish = data.dig('finish', '_value') if data['finish']
         @attachments = (data.dig('attachments', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
         @subactivities = (data.dig('subactivities', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
         @failure_summary_ids = (data.dig('failureSummaryIDs', '_values') || []).map {|d| d.dig('failureSummaryIDs', '_value') }
@@ -305,66 +225,59 @@ module XCResult
       end
     end
 
-    # - ActionTestAttachment
-    #   * Kind: object
-    #   * Properties:
-    #     + uniformTypeIdentifier: String
-    #     + name: String?
-    #     + timestamp: Date?
-    #     + userInfo: SortedKeyValueArray?
-    #     + lifetime: String
-    #     + inActivityIdentifier: Int
-    #     + filename: String?
-    #     + payloadRef: Reference?
-    #     + payloadSize: Int
     class ActionTestAttachment
-      # @return [String] uniformTypeIdentifier
+      # @return [String] uniform_type_identifier
       attr_reader :uniform_type_identifier
       # @return [String, nil] name
       attr_reader :name
+      # @return [String, nil] uuid
+      attr_reader :uuid
       # @return [Date, nil] timestamp
       attr_reader :timestamp
-      # @return [SortedKeyValueArray, nil] userInfo
+      # @return [SortedKeyValueArray, nil] user_info
       attr_reader :user_info
       # @return [String] lifetime
       attr_reader :lifetime
-      # @return [Int] inActivityIdentifier
+      # @return [Int] in_activity_identifier
       attr_reader :in_activity_identifier
       # @return [String, nil] filename
       attr_reader :filename
-      # @return [Reference, nil] payloadRef
+      # @return [Reference, nil] payload_ref
       attr_reader :payload_ref
-      # @return [Int] payloadSize
+      # @return [Int] payload_size
       attr_reader :payload_size
     
       def initialize(data)
         @uniform_type_identifier = data.dig('uniformTypeIdentifier', '_value')
         @name = data.dig('name', '_value') if data['name']
-        @timestamp = Time.parse(data.dig('timestamp', '_value')) if data['timestamp']
+        @uuid = data.dig('uuid', '_value') if data['uuid']
+        @timestamp = data.dig('timestamp', '_value') if data['timestamp']
         @user_info = Models.load_class(data.dig('userInfo', '_type', '_name')).new(data.dig('userInfo')) if data['userInfo']
         @lifetime = data.dig('lifetime', '_value')
-        @in_activity_identifier = data.dig('inActivityIdentifier', '_value').to_i
+        @in_activity_identifier = data.dig('inActivityIdentifier', '_value')
         @filename = data.dig('filename', '_value') if data['filename']
         @payload_ref = Models.load_class(data.dig('payloadRef', '_type', '_name')).new(data.dig('payloadRef')) if data['payloadRef']
-        @payload_size = data.dig('payloadSize', '_value').to_i
+        @payload_size = data.dig('payloadSize', '_value')
       end
     end
 
-    # - ActionTestExpectedFailure
-    #   * Kind: object
-    #   * Properties:
-    #     + uuid: String
-    #     + failureReason: String?
-    #     + failureSummary: ActionTestFailureSummary?
-    #     + isTopLevelFailure: Bool
+    class ActionTestConfiguration
+      # @return [SortedKeyValueArray] values
+      attr_reader :values
+    
+      def initialize(data)
+        @values = Models.load_class(data.dig('values', '_type', '_name')).new(data.dig('values'))
+      end
+    end
+
     class ActionTestExpectedFailure
       # @return [String] uuid
       attr_reader :uuid
-      # @return [String, nil] failureReason
+      # @return [String, nil] failure_reason
       attr_reader :failure_reason
-      # @return [ActionTestFailureSummary, nil] failureSummary
+      # @return [ActionTestFailureSummary, nil] failure_summary
       attr_reader :failure_summary
-      # @return [Bool] isTopLevelFailure
+      # @return [Bool] is_top_level_failure
       attr_reader :is_top_level_failure
     
       def initialize(data)
@@ -375,51 +288,36 @@ module XCResult
       end
     end
 
-    # - ActionTestFailureSummary
-    #   * Kind: object
-    #   * Properties:
-    #     + message: String?
-    #     + fileName: String
-    #     + lineNumber: Int
-    #     + isPerformanceFailure: Bool
-    #     + uuid: String
-    #     + issueType: String?
-    #     + detailedDescription: String?
-    #     + attachments: [ActionTestAttachment]
-    #     + associatedError: TestAssociatedError?
-    #     + sourceCodeContext: SourceCodeContext?
-    #     + timestamp: Date?
-    #     + isTopLevelFailure: Bool
     class ActionTestFailureSummary
       # @return [String, nil] message
       attr_reader :message
-      # @return [String] fileName
+      # @return [String] file_name
       attr_reader :file_name
-      # @return [Int] lineNumber
+      # @return [Int] line_number
       attr_reader :line_number
-      # @return [Bool] isPerformanceFailure
+      # @return [Bool] is_performance_failure
       attr_reader :is_performance_failure
       # @return [String] uuid
       attr_reader :uuid
-      # @return [String, nil] issueType
+      # @return [String, nil] issue_type
       attr_reader :issue_type
-      # @return [String, nil] detailedDescription
+      # @return [String, nil] detailed_description
       attr_reader :detailed_description
       # @return [Array<ActionTestAttachment>] attachments
       attr_reader :attachments
-      # @return [TestAssociatedError, nil] associatedError
+      # @return [TestAssociatedError, nil] associated_error
       attr_reader :associated_error
-      # @return [SourceCodeContext, nil] sourceCodeContext
+      # @return [SourceCodeContext, nil] source_code_context
       attr_reader :source_code_context
       # @return [Date, nil] timestamp
       attr_reader :timestamp
-      # @return [Bool] isTopLevelFailure
+      # @return [Bool] is_top_level_failure
       attr_reader :is_top_level_failure
     
       def initialize(data)
         @message = data.dig('message', '_value') if data['message']
         @file_name = data.dig('fileName', '_value')
-        @line_number = data.dig('lineNumber', '_value').to_i
+        @line_number = data.dig('lineNumber', '_value')
         @is_performance_failure = data.dig('isPerformanceFailure', '_value')
         @uuid = data.dig('uuid', '_value')
         @issue_type = data.dig('issueType', '_value') if data['issueType']
@@ -427,16 +325,11 @@ module XCResult
         @attachments = (data.dig('attachments', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
         @associated_error = Models.load_class(data.dig('associatedError', '_type', '_name')).new(data.dig('associatedError')) if data['associatedError']
         @source_code_context = Models.load_class(data.dig('sourceCodeContext', '_type', '_name')).new(data.dig('sourceCodeContext')) if data['sourceCodeContext']
-        @timestamp = Time.parse(data.dig('timestamp', '_value')) if data['timestamp']
+        @timestamp = data.dig('timestamp', '_value') if data['timestamp']
         @is_top_level_failure = data.dig('isTopLevelFailure', '_value')
       end
     end
 
-    # - ActionTestSummaryIdentifiableObject
-    #   * Supertype: ActionAbstractTestSummary
-    #   * Kind: object
-    #   * Properties:
-    #     + identifier: String?
     class ActionTestSummaryIdentifiableObject < ActionAbstractTestSummary
       # @return [String, nil] identifier
       attr_reader :identifier
@@ -447,96 +340,66 @@ module XCResult
       end
     end
 
-    # - ActionTestMetadata
-    #   * Supertype: ActionTestSummaryIdentifiableObject
-    #   * Kind: object
-    #   * Properties:
-    #     + testStatus: String
-    #     + duration: Double?
-    #     + summaryRef: Reference?
-    #     + performanceMetricsCount: Int
-    #     + failureSummariesCount: Int
-    #     + activitySummariesCount: Int
     class ActionTestMetadata < ActionTestSummaryIdentifiableObject
-      # @return [String] testStatus
+      # @return [String] test_status
       attr_reader :test_status
       # @return [Double, nil] duration
       attr_reader :duration
-      # @return [Reference, nil] summaryRef
+      # @return [Reference, nil] summary_ref
       attr_reader :summary_ref
-      # @return [Int] performanceMetricsCount
+      # @return [Int] performance_metrics_count
       attr_reader :performance_metrics_count
-      # @return [Int] failureSummariesCount
+      # @return [Int] failure_summaries_count
       attr_reader :failure_summaries_count
-      # @return [Int] activitySummariesCount
+      # @return [Int] activity_summaries_count
       attr_reader :activity_summaries_count
     
       def initialize(data)
         @test_status = data.dig('testStatus', '_value')
-        @duration = data.dig('duration', '_value').to_f if data['duration']
+        @duration = data.dig('duration', '_value') if data['duration']
         @summary_ref = Models.load_class(data.dig('summaryRef', '_type', '_name')).new(data.dig('summaryRef')) if data['summaryRef']
-        @performance_metrics_count = data.dig('performanceMetricsCount', '_value').to_i
-        @failure_summaries_count = data.dig('failureSummariesCount', '_value').to_i
-        @activity_summaries_count = data.dig('activitySummariesCount', '_value').to_i
+        @performance_metrics_count = data.dig('performanceMetricsCount', '_value')
+        @failure_summaries_count = data.dig('failureSummariesCount', '_value')
+        @activity_summaries_count = data.dig('activitySummariesCount', '_value')
         super
       end
     end
 
-    # - ActionTestNoticeSummary
-    #   * Kind: object
-    #   * Properties:
-    #     + message: String?
-    #     + fileName: String
-    #     + lineNumber: Int
     class ActionTestNoticeSummary
       # @return [String, nil] message
       attr_reader :message
-      # @return [String] fileName
+      # @return [String] file_name
       attr_reader :file_name
-      # @return [Int] lineNumber
+      # @return [Int] line_number
       attr_reader :line_number
     
       def initialize(data)
         @message = data.dig('message', '_value') if data['message']
         @file_name = data.dig('fileName', '_value')
-        @line_number = data.dig('lineNumber', '_value').to_i
+        @line_number = data.dig('lineNumber', '_value')
       end
     end
 
-    # - ActionTestPerformanceMetricSummary
-    #   * Kind: object
-    #   * Properties:
-    #     + displayName: String
-    #     + unitOfMeasurement: String
-    #     + measurements: [Double]
-    #     + identifier: String?
-    #     + baselineName: String?
-    #     + baselineAverage: Double?
-    #     + maxPercentRegression: Double?
-    #     + maxPercentRelativeStandardDeviation: Double?
-    #     + maxRegression: Double?
-    #     + maxStandardDeviation: Double?
-    #     + polarity: String?
     class ActionTestPerformanceMetricSummary
-      # @return [String] displayName
+      # @return [String] display_name
       attr_reader :display_name
-      # @return [String] unitOfMeasurement
+      # @return [String] unit_of_measurement
       attr_reader :unit_of_measurement
       # @return [Array<Double>] measurements
       attr_reader :measurements
       # @return [String, nil] identifier
       attr_reader :identifier
-      # @return [String, nil] baselineName
+      # @return [String, nil] baseline_name
       attr_reader :baseline_name
-      # @return [Double, nil] baselineAverage
+      # @return [Double, nil] baseline_average
       attr_reader :baseline_average
-      # @return [Double, nil] maxPercentRegression
+      # @return [Double, nil] max_percent_regression
       attr_reader :max_percent_regression
-      # @return [Double, nil] maxPercentRelativeStandardDeviation
+      # @return [Double, nil] max_percent_relative_standard_deviation
       attr_reader :max_percent_relative_standard_deviation
-      # @return [Double, nil] maxRegression
+      # @return [Double, nil] max_regression
       attr_reader :max_regression
-      # @return [Double, nil] maxStandardDeviation
+      # @return [Double, nil] max_standard_deviation
       attr_reader :max_standard_deviation
       # @return [String, nil] polarity
       attr_reader :polarity
@@ -544,22 +407,18 @@ module XCResult
       def initialize(data)
         @display_name = data.dig('displayName', '_value')
         @unit_of_measurement = data.dig('unitOfMeasurement', '_value')
-        @measurements = (data.dig('measurements', '_values') || []).map {|d| d.dig('measurements', '_value').to_f }
+        @measurements = (data.dig('measurements', '_values') || []).map {|d| d.dig('measurements', '_value') }
         @identifier = data.dig('identifier', '_value') if data['identifier']
         @baseline_name = data.dig('baselineName', '_value') if data['baselineName']
-        @baseline_average = data.dig('baselineAverage', '_value').to_f if data['baselineAverage']
-        @max_percent_regression = data.dig('maxPercentRegression', '_value').to_f if data['maxPercentRegression']
-        @max_percent_relative_standard_deviation = data.dig('maxPercentRelativeStandardDeviation', '_value').to_f if data['maxPercentRelativeStandardDeviation']
-        @max_regression = data.dig('maxRegression', '_value').to_f if data['maxRegression']
-        @max_standard_deviation = data.dig('maxStandardDeviation', '_value').to_f if data['maxStandardDeviation']
+        @baseline_average = data.dig('baselineAverage', '_value') if data['baselineAverage']
+        @max_percent_regression = data.dig('maxPercentRegression', '_value') if data['maxPercentRegression']
+        @max_percent_relative_standard_deviation = data.dig('maxPercentRelativeStandardDeviation', '_value') if data['maxPercentRelativeStandardDeviation']
+        @max_regression = data.dig('maxRegression', '_value') if data['maxRegression']
+        @max_standard_deviation = data.dig('maxStandardDeviation', '_value') if data['maxStandardDeviation']
         @polarity = data.dig('polarity', '_value') if data['polarity']
       end
     end
 
-    # - ActionTestPlanRunSummaries
-    #   * Kind: object
-    #   * Properties:
-    #     + summaries: [ActionTestPlanRunSummary]
     class ActionTestPlanRunSummaries
       # @return [Array<ActionTestPlanRunSummary>] summaries
       attr_reader :summaries
@@ -569,13 +428,8 @@ module XCResult
       end
     end
 
-    # - ActionTestPlanRunSummary
-    #   * Supertype: ActionAbstractTestSummary
-    #   * Kind: object
-    #   * Properties:
-    #     + testableSummaries: [ActionTestableSummary]
     class ActionTestPlanRunSummary < ActionAbstractTestSummary
-      # @return [Array<ActionTestableSummary>] testableSummaries
+      # @return [Array<ActionTestableSummary>] testable_summaries
       attr_reader :testable_summaries
     
       def initialize(data)
@@ -584,76 +438,55 @@ module XCResult
       end
     end
 
-    # - ActionTestRepetitionPolicySummary
-    #   * Kind: object
-    #   * Properties:
-    #     + iteration: Int?
-    #     + totalIterations: Int?
-    #     + repetitionMode: String?
     class ActionTestRepetitionPolicySummary
       # @return [Int, nil] iteration
       attr_reader :iteration
-      # @return [Int, nil] totalIterations
+      # @return [Int, nil] total_iterations
       attr_reader :total_iterations
-      # @return [String, nil] repetitionMode
+      # @return [String, nil] repetition_mode
       attr_reader :repetition_mode
     
       def initialize(data)
-        @iteration = data.dig('iteration', '_value').to_i if data['iteration']
-        @total_iterations = data.dig('totalIterations', '_value').to_i if data['totalIterations']
+        @iteration = data.dig('iteration', '_value') if data['iteration']
+        @total_iterations = data.dig('totalIterations', '_value') if data['totalIterations']
         @repetition_mode = data.dig('repetitionMode', '_value') if data['repetitionMode']
       end
     end
 
-    # - ActionTestSummary
-    #   * Supertype: ActionTestSummaryIdentifiableObject
-    #   * Kind: object
-    #   * Properties:
-    #     + testStatus: String
-    #     + duration: Double
-    #     + performanceMetrics: [ActionTestPerformanceMetricSummary]
-    #     + failureSummaries: [ActionTestFailureSummary]
-    #     + expectedFailures: [ActionTestExpectedFailure]
-    #     + skipNoticeSummary: ActionTestNoticeSummary?
-    #     + activitySummaries: [ActionTestActivitySummary]
-    #     + repetitionPolicySummary: ActionTestRepetitionPolicySummary?
     class ActionTestSummary < ActionTestSummaryIdentifiableObject
-      # @return [String] testStatus
+      # @return [String] test_status
       attr_reader :test_status
       # @return [Double] duration
       attr_reader :duration
-      # @return [Array<ActionTestPerformanceMetricSummary>] performanceMetrics
+      # @return [Array<ActionTestPerformanceMetricSummary>] performance_metrics
       attr_reader :performance_metrics
-      # @return [Array<ActionTestFailureSummary>] failureSummaries
+      # @return [Array<ActionTestFailureSummary>] failure_summaries
       attr_reader :failure_summaries
-      # @return [Array<ActionTestExpectedFailure>] expectedFailures
+      # @return [Array<ActionTestExpectedFailure>] expected_failures
       attr_reader :expected_failures
-      # @return [ActionTestNoticeSummary, nil] skipNoticeSummary
+      # @return [ActionTestNoticeSummary, nil] skip_notice_summary
       attr_reader :skip_notice_summary
-      # @return [Array<ActionTestActivitySummary>] activitySummaries
+      # @return [Array<ActionTestActivitySummary>] activity_summaries
       attr_reader :activity_summaries
-      # @return [ActionTestRepetitionPolicySummary, nil] repetitionPolicySummary
+      # @return [ActionTestRepetitionPolicySummary, nil] repetition_policy_summary
       attr_reader :repetition_policy_summary
+      # @return [ActionTestConfiguration, nil] configuration
+      attr_reader :configuration
     
       def initialize(data)
         @test_status = data.dig('testStatus', '_value')
-        @duration = data.dig('duration', '_value').to_f
+        @duration = data.dig('duration', '_value')
         @performance_metrics = (data.dig('performanceMetrics', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
         @failure_summaries = (data.dig('failureSummaries', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
         @expected_failures = (data.dig('expectedFailures', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
         @skip_notice_summary = Models.load_class(data.dig('skipNoticeSummary', '_type', '_name')).new(data.dig('skipNoticeSummary')) if data['skipNoticeSummary']
         @activity_summaries = (data.dig('activitySummaries', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
         @repetition_policy_summary = Models.load_class(data.dig('repetitionPolicySummary', '_type', '_name')).new(data.dig('repetitionPolicySummary')) if data['repetitionPolicySummary']
+        @configuration = Models.load_class(data.dig('configuration', '_type', '_name')).new(data.dig('configuration')) if data['configuration']
         super
       end
     end
 
-    # - ActionTestSummaryGroup
-    #   * Supertype: ActionTestSummaryIdentifiableObject
-    #   * Kind: object
-    #   * Properties:
-    #     + duration: Double
-    #     + subtests: [ActionTestSummaryIdentifiableObject]
     class ActionTestSummaryGroup < ActionTestSummaryIdentifiableObject
       # @return [Double] duration
       attr_reader :duration
@@ -661,40 +494,28 @@ module XCResult
       attr_reader :subtests
     
       def initialize(data)
-        @duration = data.dig('duration', '_value').to_f
+        @duration = data.dig('duration', '_value')
         @subtests = (data.dig('subtests', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
         super
       end
     end
 
-    # - ActionTestableSummary
-    #   * Supertype: ActionAbstractTestSummary
-    #   * Kind: object
-    #   * Properties:
-    #     + projectRelativePath: String?
-    #     + targetName: String?
-    #     + testKind: String?
-    #     + tests: [ActionTestSummaryIdentifiableObject]
-    #     + diagnosticsDirectoryName: String?
-    #     + failureSummaries: [ActionTestFailureSummary]
-    #     + testLanguage: String?
-    #     + testRegion: String?
     class ActionTestableSummary < ActionAbstractTestSummary
-      # @return [String, nil] projectRelativePath
+      # @return [String, nil] project_relative_path
       attr_reader :project_relative_path
-      # @return [String, nil] targetName
+      # @return [String, nil] target_name
       attr_reader :target_name
-      # @return [String, nil] testKind
+      # @return [String, nil] test_kind
       attr_reader :test_kind
       # @return [Array<ActionTestSummaryIdentifiableObject>] tests
       attr_reader :tests
-      # @return [String, nil] diagnosticsDirectoryName
+      # @return [String, nil] diagnostics_directory_name
       attr_reader :diagnostics_directory_name
-      # @return [Array<ActionTestFailureSummary>] failureSummaries
+      # @return [Array<ActionTestFailureSummary>] failure_summaries
       attr_reader :failure_summaries
-      # @return [String, nil] testLanguage
+      # @return [String, nil] test_language
       attr_reader :test_language
-      # @return [String, nil] testRegion
+      # @return [String, nil] test_region
       attr_reader :test_region
     
       def initialize(data)
@@ -710,18 +531,12 @@ module XCResult
       end
     end
 
-    # - ActionsInvocationMetadata
-    #   * Kind: object
-    #   * Properties:
-    #     + creatingWorkspaceFilePath: String
-    #     + uniqueIdentifier: String
-    #     + schemeIdentifier: EntityIdentifier?
     class ActionsInvocationMetadata
-      # @return [String] creatingWorkspaceFilePath
+      # @return [String] creating_workspace_file_path
       attr_reader :creating_workspace_file_path
-      # @return [String] uniqueIdentifier
+      # @return [String] unique_identifier
       attr_reader :unique_identifier
-      # @return [EntityIdentifier, nil] schemeIdentifier
+      # @return [EntityIdentifier, nil] scheme_identifier
       attr_reader :scheme_identifier
     
       def initialize(data)
@@ -731,16 +546,8 @@ module XCResult
       end
     end
 
-    # - ActionsInvocationRecord
-    #   * Kind: object
-    #   * Properties:
-    #     + metadataRef: Reference?
-    #     + metrics: ResultMetrics
-    #     + issues: ResultIssueSummaries
-    #     + actions: [ActionRecord]
-    #     + archive: ArchiveInfo?
     class ActionsInvocationRecord
-      # @return [Reference, nil] metadataRef
+      # @return [Reference, nil] metadata_ref
       attr_reader :metadata_ref
       # @return [ResultMetrics] metrics
       attr_reader :metrics
@@ -760,33 +567,21 @@ module XCResult
       end
     end
 
-    # - ActivityLogAnalyzerStep
-    #   * Kind: object
-    #   * Properties:
-    #     + parentIndex: Int
     class ActivityLogAnalyzerStep
-      # @return [Int] parentIndex
+      # @return [Int] parent_index
       attr_reader :parent_index
     
       def initialize(data)
-        @parent_index = data.dig('parentIndex', '_value').to_i
+        @parent_index = data.dig('parentIndex', '_value')
       end
     end
 
-    # - ActivityLogAnalyzerControlFlowStep
-    #   * Supertype: ActivityLogAnalyzerStep
-    #   * Kind: object
-    #   * Properties:
-    #     + title: String
-    #     + startLocation: DocumentLocation?
-    #     + endLocation: DocumentLocation?
-    #     + edges: [ActivityLogAnalyzerControlFlowStepEdge]
     class ActivityLogAnalyzerControlFlowStep < ActivityLogAnalyzerStep
       # @return [String] title
       attr_reader :title
-      # @return [DocumentLocation, nil] startLocation
+      # @return [DocumentLocation, nil] start_location
       attr_reader :start_location
-      # @return [DocumentLocation, nil] endLocation
+      # @return [DocumentLocation, nil] end_location
       attr_reader :end_location
       # @return [Array<ActivityLogAnalyzerControlFlowStepEdge>] edges
       attr_reader :edges
@@ -800,15 +595,10 @@ module XCResult
       end
     end
 
-    # - ActivityLogAnalyzerControlFlowStepEdge
-    #   * Kind: object
-    #   * Properties:
-    #     + startLocation: DocumentLocation?
-    #     + endLocation: DocumentLocation?
     class ActivityLogAnalyzerControlFlowStepEdge
-      # @return [DocumentLocation, nil] startLocation
+      # @return [DocumentLocation, nil] start_location
       attr_reader :start_location
-      # @return [DocumentLocation, nil] endLocation
+      # @return [DocumentLocation, nil] end_location
       attr_reader :end_location
     
       def initialize(data)
@@ -817,14 +607,6 @@ module XCResult
       end
     end
 
-    # - ActivityLogAnalyzerEventStep
-    #   * Supertype: ActivityLogAnalyzerStep
-    #   * Kind: object
-    #   * Properties:
-    #     + title: String
-    #     + location: DocumentLocation?
-    #     + description: String
-    #     + callDepth: Int
     class ActivityLogAnalyzerEventStep < ActivityLogAnalyzerStep
       # @return [String] title
       attr_reader :title
@@ -832,33 +614,24 @@ module XCResult
       attr_reader :location
       # @return [String] description
       attr_reader :description
-      # @return [Int] callDepth
+      # @return [Int] call_depth
       attr_reader :call_depth
     
       def initialize(data)
         @title = data.dig('title', '_value')
         @location = Models.load_class(data.dig('location', '_type', '_name')).new(data.dig('location')) if data['location']
         @description = data.dig('description', '_value')
-        @call_depth = data.dig('callDepth', '_value').to_i
+        @call_depth = data.dig('callDepth', '_value')
         super
       end
     end
 
-    # - ActivityLogMessage
-    #   * Kind: object
-    #   * Properties:
-    #     + type: String
-    #     + title: String
-    #     + shortTitle: String?
-    #     + category: String?
-    #     + location: DocumentLocation?
-    #     + annotations: [ActivityLogMessageAnnotation]
     class ActivityLogMessage
       # @return [String] type
       attr_reader :type
       # @return [String] title
       attr_reader :title
-      # @return [String, nil] shortTitle
+      # @return [String, nil] short_title
       attr_reader :short_title
       # @return [String, nil] category
       attr_reader :category
@@ -877,32 +650,22 @@ module XCResult
       end
     end
 
-    # - ActivityLogAnalyzerResultMessage
-    #   * Supertype: ActivityLogMessage
-    #   * Kind: object
-    #   * Properties:
-    #     + steps: [ActivityLogAnalyzerStep]
-    #     + resultType: String?
-    #     + keyEventIndex: Int
     class ActivityLogAnalyzerResultMessage < ActivityLogMessage
       # @return [Array<ActivityLogAnalyzerStep>] steps
       attr_reader :steps
-      # @return [String, nil] resultType
+      # @return [String, nil] result_type
       attr_reader :result_type
-      # @return [Int] keyEventIndex
+      # @return [Int] key_event_index
       attr_reader :key_event_index
     
       def initialize(data)
         @steps = (data.dig('steps', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
         @result_type = data.dig('resultType', '_value') if data['resultType']
-        @key_event_index = data.dig('keyEventIndex', '_value').to_i
+        @key_event_index = data.dig('keyEventIndex', '_value')
         super
       end
     end
 
-    # - ActivityLogAnalyzerWarningMessage
-    #   * Supertype: ActivityLogMessage
-    #   * Kind: object
     class ActivityLogAnalyzerWarningMessage < ActivityLogMessage
     
       def initialize(data)
@@ -910,23 +673,12 @@ module XCResult
       end
     end
 
-    # - ActivityLogSection
-    #   * Kind: object
-    #   * Properties:
-    #     + domainType: String
-    #     + title: String
-    #     + startTime: Date?
-    #     + duration: Double
-    #     + result: String?
-    #     + location: DocumentLocation?
-    #     + subsections: [ActivityLogSection]
-    #     + messages: [ActivityLogMessage]
     class ActivityLogSection
-      # @return [String] domainType
+      # @return [String] domain_type
       attr_reader :domain_type
       # @return [String] title
       attr_reader :title
-      # @return [Date, nil] startTime
+      # @return [Date, nil] start_time
       attr_reader :start_time
       # @return [Double] duration
       attr_reader :duration
@@ -942,8 +694,8 @@ module XCResult
       def initialize(data)
         @domain_type = data.dig('domainType', '_value')
         @title = data.dig('title', '_value')
-        @start_time = Time.parse(data.dig('startTime', '_value')) if data['startTime']
-        @duration = data.dig('duration', '_value').to_f
+        @start_time = data.dig('startTime', '_value') if data['startTime']
+        @duration = data.dig('duration', '_value')
         @result = data.dig('result', '_value') if data['result']
         @location = Models.load_class(data.dig('location', '_type', '_name')).new(data.dig('location')) if data['location']
         @subsections = (data.dig('subsections', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
@@ -951,34 +703,22 @@ module XCResult
       end
     end
 
-    # - ActivityLogCommandInvocationSection
-    #   * Supertype: ActivityLogSection
-    #   * Kind: object
-    #   * Properties:
-    #     + commandDetails: String
-    #     + emittedOutput: String
-    #     + exitCode: Int?
     class ActivityLogCommandInvocationSection < ActivityLogSection
-      # @return [String] commandDetails
+      # @return [String] command_details
       attr_reader :command_details
-      # @return [String] emittedOutput
+      # @return [String] emitted_output
       attr_reader :emitted_output
-      # @return [Int, nil] exitCode
+      # @return [Int, nil] exit_code
       attr_reader :exit_code
     
       def initialize(data)
         @command_details = data.dig('commandDetails', '_value')
         @emitted_output = data.dig('emittedOutput', '_value')
-        @exit_code = data.dig('exitCode', '_value').to_i if data['exitCode']
+        @exit_code = data.dig('exitCode', '_value') if data['exitCode']
         super
       end
     end
 
-    # - ActivityLogMajorSection
-    #   * Supertype: ActivityLogSection
-    #   * Kind: object
-    #   * Properties:
-    #     + subtitle: String
     class ActivityLogMajorSection < ActivityLogSection
       # @return [String] subtitle
       attr_reader :subtitle
@@ -989,11 +729,6 @@ module XCResult
       end
     end
 
-    # - ActivityLogMessageAnnotation
-    #   * Kind: object
-    #   * Properties:
-    #     + title: String
-    #     + location: DocumentLocation?
     class ActivityLogMessageAnnotation
       # @return [String] title
       attr_reader :title
@@ -1006,13 +741,8 @@ module XCResult
       end
     end
 
-    # - ActivityLogTargetBuildSection
-    #   * Supertype: ActivityLogMajorSection
-    #   * Kind: object
-    #   * Properties:
-    #     + productType: String?
     class ActivityLogTargetBuildSection < ActivityLogMajorSection
-      # @return [String, nil] productType
+      # @return [String, nil] product_type
       attr_reader :product_type
     
       def initialize(data)
@@ -1021,37 +751,24 @@ module XCResult
       end
     end
 
-    # - ActivityLogUnitTestSection
-    #   * Supertype: ActivityLogSection
-    #   * Kind: object
-    #   * Properties:
-    #     + testName: String?
-    #     + suiteName: String?
-    #     + summary: String?
-    #     + emittedOutput: String?
-    #     + performanceTestOutput: String?
-    #     + testsPassedString: String?
-    #     + wasSkipped: Bool
-    #     + runnablePath: String?
-    #     + runnableUTI: String?
     class ActivityLogUnitTestSection < ActivityLogSection
-      # @return [String, nil] testName
+      # @return [String, nil] test_name
       attr_reader :test_name
-      # @return [String, nil] suiteName
+      # @return [String, nil] suite_name
       attr_reader :suite_name
       # @return [String, nil] summary
       attr_reader :summary
-      # @return [String, nil] emittedOutput
+      # @return [String, nil] emitted_output
       attr_reader :emitted_output
-      # @return [String, nil] performanceTestOutput
+      # @return [String, nil] performance_test_output
       attr_reader :performance_test_output
-      # @return [String, nil] testsPassedString
+      # @return [String, nil] tests_passed_string
       attr_reader :tests_passed_string
-      # @return [Bool] wasSkipped
+      # @return [Bool] was_skipped
       attr_reader :was_skipped
-      # @return [String, nil] runnablePath
+      # @return [String, nil] runnable_path
       attr_reader :runnable_path
-      # @return [String, nil] runnableUTI
+      # @return [String, nil] runnable_uti
       attr_reader :runnable_uti
     
       def initialize(data)
@@ -1068,10 +785,6 @@ module XCResult
       end
     end
 
-    # - ArchiveInfo
-    #   * Kind: object
-    #   * Properties:
-    #     + path: String?
     class ArchiveInfo
       # @return [String, nil] path
       attr_reader :path
@@ -1081,34 +794,18 @@ module XCResult
       end
     end
 
-    # - Array
-    #   * Kind: array
     class Array
     
       def initialize(data)
       end
     end
 
-    # - Bool
-    #   * Kind: value
-    class Bool
-    
-      def initialize(data)
-      end
-    end
-
-    # - CodeCoverageInfo
-    #   * Kind: object
-    #   * Properties:
-    #     + hasCoverageData: Bool
-    #     + reportRef: Reference?
-    #     + archiveRef: Reference?
     class CodeCoverageInfo
-      # @return [Bool] hasCoverageData
+      # @return [Bool] has_coverage_data
       attr_reader :has_coverage_data
-      # @return [Reference, nil] reportRef
+      # @return [Reference, nil] report_ref
       attr_reader :report_ref
-      # @return [Reference, nil] archiveRef
+      # @return [Reference, nil] archive_ref
       attr_reader :archive_ref
     
       def initialize(data)
@@ -1118,23 +815,10 @@ module XCResult
       end
     end
 
-    # - Date
-    #   * Kind: value
-    class Date
-    
-      def initialize(data)
-      end
-    end
-
-    # - DocumentLocation
-    #   * Kind: object
-    #   * Properties:
-    #     + url: String
-    #     + concreteTypeName: String
     class DocumentLocation
       # @return [String] url
       attr_reader :url
-      # @return [String] concreteTypeName
+      # @return [String] concrete_type_name
       attr_reader :concrete_type_name
     
       def initialize(data)
@@ -1143,29 +827,14 @@ module XCResult
       end
     end
 
-    # - Double
-    #   * Kind: value
-    class Double
-    
-      def initialize(data)
-      end
-    end
-
-    # - EntityIdentifier
-    #   * Kind: object
-    #   * Properties:
-    #     + entityName: String
-    #     + containerName: String
-    #     + entityType: String
-    #     + sharedState: String
     class EntityIdentifier
-      # @return [String] entityName
+      # @return [String] entity_name
       attr_reader :entity_name
-      # @return [String] containerName
+      # @return [String] container_name
       attr_reader :container_name
-      # @return [String] entityType
+      # @return [String] entity_type
       attr_reader :entity_type
-      # @return [String] sharedState
+      # @return [String] shared_state
       attr_reader :shared_state
     
       def initialize(data)
@@ -1176,29 +845,14 @@ module XCResult
       end
     end
 
-    # - Int
-    #   * Kind: value
-    class Int
-    
-      def initialize(data)
-      end
-    end
-
-    # - IssueSummary
-    #   * Kind: object
-    #   * Properties:
-    #     + issueType: String
-    #     + message: String
-    #     + producingTarget: String?
-    #     + documentLocationInCreatingWorkspace: DocumentLocation?
     class IssueSummary
-      # @return [String] issueType
+      # @return [String] issue_type
       attr_reader :issue_type
       # @return [String] message
       attr_reader :message
-      # @return [String, nil] producingTarget
+      # @return [String, nil] producing_target
       attr_reader :producing_target
-      # @return [DocumentLocation, nil] documentLocationInCreatingWorkspace
+      # @return [DocumentLocation, nil] document_location_in_creating_workspace
       attr_reader :document_location_in_creating_workspace
     
       def initialize(data)
@@ -1209,10 +863,6 @@ module XCResult
       end
     end
 
-    # - ObjectID
-    #   * Kind: object
-    #   * Properties:
-    #     + hash: String
     class ObjectID
       # @return [String] hash
       attr_reader :hash
@@ -1222,15 +872,10 @@ module XCResult
       end
     end
 
-    # - Reference
-    #   * Kind: object
-    #   * Properties:
-    #     + id: String
-    #     + targetType: TypeDefinition?
     class Reference
       # @return [String] id
       attr_reader :id
-      # @return [TypeDefinition, nil] targetType
+      # @return [TypeDefinition, nil] target_type
       attr_reader :target_type
     
       def initialize(data)
@@ -1239,21 +884,14 @@ module XCResult
       end
     end
 
-    # - ResultIssueSummaries
-    #   * Kind: object
-    #   * Properties:
-    #     + analyzerWarningSummaries: [IssueSummary]
-    #     + errorSummaries: [IssueSummary]
-    #     + testFailureSummaries: [TestFailureIssueSummary]
-    #     + warningSummaries: [IssueSummary]
     class ResultIssueSummaries
-      # @return [Array<IssueSummary>] analyzerWarningSummaries
+      # @return [Array<IssueSummary>] analyzer_warning_summaries
       attr_reader :analyzer_warning_summaries
-      # @return [Array<IssueSummary>] errorSummaries
+      # @return [Array<IssueSummary>] error_summaries
       attr_reader :error_summaries
-      # @return [Array<TestFailureIssueSummary>] testFailureSummaries
+      # @return [Array<TestFailureIssueSummary>] test_failure_summaries
       attr_reader :test_failure_summaries
-      # @return [Array<IssueSummary>] warningSummaries
+      # @return [Array<IssueSummary>] warning_summaries
       attr_reader :warning_summaries
     
       def initialize(data)
@@ -1264,43 +902,30 @@ module XCResult
       end
     end
 
-    # - ResultMetrics
-    #   * Kind: object
-    #   * Properties:
-    #     + analyzerWarningCount: Int
-    #     + errorCount: Int
-    #     + testsCount: Int
-    #     + testsFailedCount: Int
-    #     + testsSkippedCount: Int
-    #     + warningCount: Int
     class ResultMetrics
-      # @return [Int] analyzerWarningCount
+      # @return [Int] analyzer_warning_count
       attr_reader :analyzer_warning_count
-      # @return [Int] errorCount
+      # @return [Int] error_count
       attr_reader :error_count
-      # @return [Int] testsCount
+      # @return [Int] tests_count
       attr_reader :tests_count
-      # @return [Int] testsFailedCount
+      # @return [Int] tests_failed_count
       attr_reader :tests_failed_count
-      # @return [Int] testsSkippedCount
+      # @return [Int] tests_skipped_count
       attr_reader :tests_skipped_count
-      # @return [Int] warningCount
+      # @return [Int] warning_count
       attr_reader :warning_count
     
       def initialize(data)
-        @analyzer_warning_count = data.dig('analyzerWarningCount', '_value').to_i
-        @error_count = data.dig('errorCount', '_value').to_i
-        @tests_count = data.dig('testsCount', '_value').to_i
-        @tests_failed_count = data.dig('testsFailedCount', '_value').to_i
-        @tests_skipped_count = data.dig('testsSkippedCount', '_value').to_i
-        @warning_count = data.dig('warningCount', '_value').to_i
+        @analyzer_warning_count = data.dig('analyzerWarningCount', '_value')
+        @error_count = data.dig('errorCount', '_value')
+        @tests_count = data.dig('testsCount', '_value')
+        @tests_failed_count = data.dig('testsFailedCount', '_value')
+        @tests_skipped_count = data.dig('testsSkippedCount', '_value')
+        @warning_count = data.dig('warningCount', '_value')
       end
     end
 
-    # - SortedKeyValueArray
-    #   * Kind: object
-    #   * Properties:
-    #     + storage: [SortedKeyValueArrayPair]
     class SortedKeyValueArray
       # @return [Array<SortedKeyValueArrayPair>] storage
       attr_reader :storage
@@ -1310,11 +935,6 @@ module XCResult
       end
     end
 
-    # - SortedKeyValueArrayPair
-    #   * Kind: object
-    #   * Properties:
-    #     + key: String
-    #     + value: SchemaSerializable
     class SortedKeyValueArrayPair
       # @return [String] key
       attr_reader :key
@@ -1327,15 +947,10 @@ module XCResult
       end
     end
 
-    # - SourceCodeContext
-    #   * Kind: object
-    #   * Properties:
-    #     + location: SourceCodeLocation?
-    #     + callStack: [SourceCodeFrame]
     class SourceCodeContext
       # @return [SourceCodeLocation, nil] location
       attr_reader :location
-      # @return [Array<SourceCodeFrame>] callStack
+      # @return [Array<SourceCodeFrame>] call_stack
       attr_reader :call_stack
     
       def initialize(data)
@@ -1344,15 +959,10 @@ module XCResult
       end
     end
 
-    # - SourceCodeFrame
-    #   * Kind: object
-    #   * Properties:
-    #     + addressString: String?
-    #     + symbolInfo: SourceCodeSymbolInfo?
     class SourceCodeFrame
-      # @return [String, nil] addressString
+      # @return [String, nil] address_string
       attr_reader :address_string
-      # @return [SourceCodeSymbolInfo, nil] symbolInfo
+      # @return [SourceCodeSymbolInfo, nil] symbol_info
       attr_reader :symbol_info
     
       def initialize(data)
@@ -1361,33 +971,22 @@ module XCResult
       end
     end
 
-    # - SourceCodeLocation
-    #   * Kind: object
-    #   * Properties:
-    #     + filePath: String?
-    #     + lineNumber: Int?
     class SourceCodeLocation
-      # @return [String, nil] filePath
+      # @return [String, nil] file_path
       attr_reader :file_path
-      # @return [Int, nil] lineNumber
+      # @return [Int, nil] line_number
       attr_reader :line_number
     
       def initialize(data)
         @file_path = data.dig('filePath', '_value') if data['filePath']
-        @line_number = data.dig('lineNumber', '_value').to_i if data['lineNumber']
+        @line_number = data.dig('lineNumber', '_value') if data['lineNumber']
       end
     end
 
-    # - SourceCodeSymbolInfo
-    #   * Kind: object
-    #   * Properties:
-    #     + imageName: String?
-    #     + symbolName: String?
-    #     + location: SourceCodeLocation?
     class SourceCodeSymbolInfo
-      # @return [String, nil] imageName
+      # @return [String, nil] image_name
       attr_reader :image_name
-      # @return [String, nil] symbolName
+      # @return [String, nil] symbol_name
       attr_reader :symbol_name
       # @return [SourceCodeLocation, nil] location
       attr_reader :location
@@ -1399,42 +998,23 @@ module XCResult
       end
     end
 
-    # - String
-    #   * Kind: value
-    class String
-    
-      def initialize(data)
-      end
-    end
-
-    # - TestAssociatedError
-    #   * Kind: object
-    #   * Properties:
-    #     + domain: String?
-    #     + code: Int?
-    #     + userInfo: SortedKeyValueArray?
     class TestAssociatedError
       # @return [String, nil] domain
       attr_reader :domain
       # @return [Int, nil] code
       attr_reader :code
-      # @return [SortedKeyValueArray, nil] userInfo
+      # @return [SortedKeyValueArray, nil] user_info
       attr_reader :user_info
     
       def initialize(data)
         @domain = data.dig('domain', '_value') if data['domain']
-        @code = data.dig('code', '_value').to_i if data['code']
+        @code = data.dig('code', '_value') if data['code']
         @user_info = Models.load_class(data.dig('userInfo', '_type', '_name')).new(data.dig('userInfo')) if data['userInfo']
       end
     end
 
-    # - TestFailureIssueSummary
-    #   * Supertype: IssueSummary
-    #   * Kind: object
-    #   * Properties:
-    #     + testCaseName: String
     class TestFailureIssueSummary < IssueSummary
-      # @return [String] testCaseName
+      # @return [String] test_case_name
       attr_reader :test_case_name
     
       def initialize(data)
@@ -1443,11 +1023,6 @@ module XCResult
       end
     end
 
-    # - TypeDefinition
-    #   * Kind: object
-    #   * Properties:
-    #     + name: String
-    #     + supertype: TypeDefinition?
     class TypeDefinition
       # @return [String] name
       attr_reader :name
