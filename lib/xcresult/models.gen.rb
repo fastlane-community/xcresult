@@ -1,5 +1,5 @@
 # This is a generated file. Don't modify this directly!
-# Last generated at: 2021-11-24 04:47:30 UTC
+# Last generated at: 2021-11-24 10:32:37 UTC
 #
 # Name: Xcode Result Types
 # Version: 3.34
@@ -68,12 +68,12 @@ module XCResult
         @identifier = data.dig('identifier', '_value')
         @is_wireless = data.dig('isWireless', '_value')
         @cpu_kind = data.dig('cpuKind', '_value')
-        @cpu_count = data.dig('cpuCount', '_value') if data['cpuCount']
-        @cpu_speed_in_mhz = data.dig('cpuSpeedInMHz', '_value') if data['cpuSpeedInMHz']
-        @bus_speed_in_mhz = data.dig('busSpeedInMHz', '_value') if data['busSpeedInMHz']
-        @ram_size_in_megabytes = data.dig('ramSizeInMegabytes', '_value') if data['ramSizeInMegabytes']
-        @physical_cpu_cores_per_package = data.dig('physicalCPUCoresPerPackage', '_value') if data['physicalCPUCoresPerPackage']
-        @logical_cpu_cores_per_package = data.dig('logicalCPUCoresPerPackage', '_value') if data['logicalCPUCoresPerPackage']
+        @cpu_count = data.dig('cpuCount', '_value').to_i if data['cpuCount']
+        @cpu_speed_in_mhz = data.dig('cpuSpeedInMHz', '_value').to_i if data['cpuSpeedInMHz']
+        @bus_speed_in_mhz = data.dig('busSpeedInMHz', '_value').to_i if data['busSpeedInMHz']
+        @ram_size_in_megabytes = data.dig('ramSizeInMegabytes', '_value').to_i if data['ramSizeInMegabytes']
+        @physical_cpu_cores_per_package = data.dig('physicalCPUCoresPerPackage', '_value').to_i if data['physicalCPUCoresPerPackage']
+        @logical_cpu_cores_per_package = data.dig('logicalCPUCoresPerPackage', '_value').to_i if data['logicalCPUCoresPerPackage']
         @platform_record = Models.load_class(data.dig('platformRecord', '_type', '_name')).new(data.dig('platformRecord'))
       end
     end
@@ -112,8 +112,8 @@ module XCResult
         @scheme_command_name = data.dig('schemeCommandName', '_value')
         @scheme_task_name = data.dig('schemeTaskName', '_value')
         @title = data.dig('title', '_value') if data['title']
-        @started_time = data.dig('startedTime', '_value')
-        @ended_time = data.dig('endedTime', '_value')
+        @started_time = Time.parse(data.dig('startedTime', '_value'))
+        @ended_time = Time.parse(data.dig('endedTime', '_value'))
         @run_destination = Models.load_class(data.dig('runDestination', '_type', '_name')).new(data.dig('runDestination'))
         @build_result = Models.load_class(data.dig('buildResult', '_type', '_name')).new(data.dig('buildResult'))
         @action_result = Models.load_class(data.dig('actionResult', '_type', '_name')).new(data.dig('actionResult'))
@@ -216,8 +216,8 @@ module XCResult
         @title = data.dig('title', '_value')
         @activity_type = data.dig('activityType', '_value')
         @uuid = data.dig('uuid', '_value')
-        @start = data.dig('start', '_value') if data['start']
-        @finish = data.dig('finish', '_value') if data['finish']
+        @start = Time.parse(data.dig('start', '_value')) if data['start']
+        @finish = Time.parse(data.dig('finish', '_value')) if data['finish']
         @attachments = (data.dig('attachments', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
         @subactivities = (data.dig('subactivities', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
         @failure_summary_ids = (data.dig('failureSummaryIDs', '_values') || []).map {|d| d.dig('failureSummaryIDs', '_value') }
@@ -251,13 +251,13 @@ module XCResult
         @uniform_type_identifier = data.dig('uniformTypeIdentifier', '_value')
         @name = data.dig('name', '_value') if data['name']
         @uuid = data.dig('uuid', '_value') if data['uuid']
-        @timestamp = data.dig('timestamp', '_value') if data['timestamp']
+        @timestamp = Time.parse(data.dig('timestamp', '_value')) if data['timestamp']
         @user_info = Models.load_class(data.dig('userInfo', '_type', '_name')).new(data.dig('userInfo')) if data['userInfo']
         @lifetime = data.dig('lifetime', '_value')
-        @in_activity_identifier = data.dig('inActivityIdentifier', '_value')
+        @in_activity_identifier = data.dig('inActivityIdentifier', '_value').to_i
         @filename = data.dig('filename', '_value') if data['filename']
         @payload_ref = Models.load_class(data.dig('payloadRef', '_type', '_name')).new(data.dig('payloadRef')) if data['payloadRef']
-        @payload_size = data.dig('payloadSize', '_value')
+        @payload_size = data.dig('payloadSize', '_value').to_i
       end
     end
 
@@ -317,7 +317,7 @@ module XCResult
       def initialize(data)
         @message = data.dig('message', '_value') if data['message']
         @file_name = data.dig('fileName', '_value')
-        @line_number = data.dig('lineNumber', '_value')
+        @line_number = data.dig('lineNumber', '_value').to_i
         @is_performance_failure = data.dig('isPerformanceFailure', '_value')
         @uuid = data.dig('uuid', '_value')
         @issue_type = data.dig('issueType', '_value') if data['issueType']
@@ -325,7 +325,7 @@ module XCResult
         @attachments = (data.dig('attachments', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
         @associated_error = Models.load_class(data.dig('associatedError', '_type', '_name')).new(data.dig('associatedError')) if data['associatedError']
         @source_code_context = Models.load_class(data.dig('sourceCodeContext', '_type', '_name')).new(data.dig('sourceCodeContext')) if data['sourceCodeContext']
-        @timestamp = data.dig('timestamp', '_value') if data['timestamp']
+        @timestamp = Time.parse(data.dig('timestamp', '_value')) if data['timestamp']
         @is_top_level_failure = data.dig('isTopLevelFailure', '_value')
       end
     end
@@ -356,11 +356,11 @@ module XCResult
     
       def initialize(data)
         @test_status = data.dig('testStatus', '_value')
-        @duration = data.dig('duration', '_value') if data['duration']
+        @duration = data.dig('duration', '_value').to_f if data['duration']
         @summary_ref = Models.load_class(data.dig('summaryRef', '_type', '_name')).new(data.dig('summaryRef')) if data['summaryRef']
-        @performance_metrics_count = data.dig('performanceMetricsCount', '_value')
-        @failure_summaries_count = data.dig('failureSummariesCount', '_value')
-        @activity_summaries_count = data.dig('activitySummariesCount', '_value')
+        @performance_metrics_count = data.dig('performanceMetricsCount', '_value').to_i
+        @failure_summaries_count = data.dig('failureSummariesCount', '_value').to_i
+        @activity_summaries_count = data.dig('activitySummariesCount', '_value').to_i
         super
       end
     end
@@ -376,7 +376,7 @@ module XCResult
       def initialize(data)
         @message = data.dig('message', '_value') if data['message']
         @file_name = data.dig('fileName', '_value')
-        @line_number = data.dig('lineNumber', '_value')
+        @line_number = data.dig('lineNumber', '_value').to_i
       end
     end
 
@@ -407,14 +407,14 @@ module XCResult
       def initialize(data)
         @display_name = data.dig('displayName', '_value')
         @unit_of_measurement = data.dig('unitOfMeasurement', '_value')
-        @measurements = (data.dig('measurements', '_values') || []).map {|d| d.dig('measurements', '_value') }
+        @measurements = (data.dig('measurements', '_values') || []).map {|d| d.dig('measurements', '_value').to_f }
         @identifier = data.dig('identifier', '_value') if data['identifier']
         @baseline_name = data.dig('baselineName', '_value') if data['baselineName']
-        @baseline_average = data.dig('baselineAverage', '_value') if data['baselineAverage']
-        @max_percent_regression = data.dig('maxPercentRegression', '_value') if data['maxPercentRegression']
-        @max_percent_relative_standard_deviation = data.dig('maxPercentRelativeStandardDeviation', '_value') if data['maxPercentRelativeStandardDeviation']
-        @max_regression = data.dig('maxRegression', '_value') if data['maxRegression']
-        @max_standard_deviation = data.dig('maxStandardDeviation', '_value') if data['maxStandardDeviation']
+        @baseline_average = data.dig('baselineAverage', '_value').to_f if data['baselineAverage']
+        @max_percent_regression = data.dig('maxPercentRegression', '_value').to_f if data['maxPercentRegression']
+        @max_percent_relative_standard_deviation = data.dig('maxPercentRelativeStandardDeviation', '_value').to_f if data['maxPercentRelativeStandardDeviation']
+        @max_regression = data.dig('maxRegression', '_value').to_f if data['maxRegression']
+        @max_standard_deviation = data.dig('maxStandardDeviation', '_value').to_f if data['maxStandardDeviation']
         @polarity = data.dig('polarity', '_value') if data['polarity']
       end
     end
@@ -447,8 +447,8 @@ module XCResult
       attr_reader :repetition_mode
     
       def initialize(data)
-        @iteration = data.dig('iteration', '_value') if data['iteration']
-        @total_iterations = data.dig('totalIterations', '_value') if data['totalIterations']
+        @iteration = data.dig('iteration', '_value').to_i if data['iteration']
+        @total_iterations = data.dig('totalIterations', '_value').to_i if data['totalIterations']
         @repetition_mode = data.dig('repetitionMode', '_value') if data['repetitionMode']
       end
     end
@@ -475,7 +475,7 @@ module XCResult
     
       def initialize(data)
         @test_status = data.dig('testStatus', '_value')
-        @duration = data.dig('duration', '_value')
+        @duration = data.dig('duration', '_value').to_f
         @performance_metrics = (data.dig('performanceMetrics', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
         @failure_summaries = (data.dig('failureSummaries', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
         @expected_failures = (data.dig('expectedFailures', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
@@ -494,7 +494,7 @@ module XCResult
       attr_reader :subtests
     
       def initialize(data)
-        @duration = data.dig('duration', '_value')
+        @duration = data.dig('duration', '_value').to_f
         @subtests = (data.dig('subtests', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
         super
       end
@@ -572,7 +572,7 @@ module XCResult
       attr_reader :parent_index
     
       def initialize(data)
-        @parent_index = data.dig('parentIndex', '_value')
+        @parent_index = data.dig('parentIndex', '_value').to_i
       end
     end
 
@@ -621,7 +621,7 @@ module XCResult
         @title = data.dig('title', '_value')
         @location = Models.load_class(data.dig('location', '_type', '_name')).new(data.dig('location')) if data['location']
         @description = data.dig('description', '_value')
-        @call_depth = data.dig('callDepth', '_value')
+        @call_depth = data.dig('callDepth', '_value').to_i
         super
       end
     end
@@ -661,7 +661,7 @@ module XCResult
       def initialize(data)
         @steps = (data.dig('steps', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
         @result_type = data.dig('resultType', '_value') if data['resultType']
-        @key_event_index = data.dig('keyEventIndex', '_value')
+        @key_event_index = data.dig('keyEventIndex', '_value').to_i
         super
       end
     end
@@ -694,8 +694,8 @@ module XCResult
       def initialize(data)
         @domain_type = data.dig('domainType', '_value')
         @title = data.dig('title', '_value')
-        @start_time = data.dig('startTime', '_value') if data['startTime']
-        @duration = data.dig('duration', '_value')
+        @start_time = Time.parse(data.dig('startTime', '_value')) if data['startTime']
+        @duration = data.dig('duration', '_value').to_f
         @result = data.dig('result', '_value') if data['result']
         @location = Models.load_class(data.dig('location', '_type', '_name')).new(data.dig('location')) if data['location']
         @subsections = (data.dig('subsections', '_values') || []).map {|d| Models.load_class(d.dig('_type', '_name')).new(d) }
@@ -714,7 +714,7 @@ module XCResult
       def initialize(data)
         @command_details = data.dig('commandDetails', '_value')
         @emitted_output = data.dig('emittedOutput', '_value')
-        @exit_code = data.dig('exitCode', '_value') if data['exitCode']
+        @exit_code = data.dig('exitCode', '_value').to_i if data['exitCode']
         super
       end
     end
@@ -917,12 +917,12 @@ module XCResult
       attr_reader :warning_count
     
       def initialize(data)
-        @analyzer_warning_count = data.dig('analyzerWarningCount', '_value')
-        @error_count = data.dig('errorCount', '_value')
-        @tests_count = data.dig('testsCount', '_value')
-        @tests_failed_count = data.dig('testsFailedCount', '_value')
-        @tests_skipped_count = data.dig('testsSkippedCount', '_value')
-        @warning_count = data.dig('warningCount', '_value')
+        @analyzer_warning_count = data.dig('analyzerWarningCount', '_value').to_i
+        @error_count = data.dig('errorCount', '_value').to_i
+        @tests_count = data.dig('testsCount', '_value').to_i
+        @tests_failed_count = data.dig('testsFailedCount', '_value').to_i
+        @tests_skipped_count = data.dig('testsSkippedCount', '_value').to_i
+        @warning_count = data.dig('warningCount', '_value').to_i
       end
     end
 
@@ -979,7 +979,7 @@ module XCResult
     
       def initialize(data)
         @file_path = data.dig('filePath', '_value') if data['filePath']
-        @line_number = data.dig('lineNumber', '_value') if data['lineNumber']
+        @line_number = data.dig('lineNumber', '_value').to_i if data['lineNumber']
       end
     end
 
@@ -1008,7 +1008,7 @@ module XCResult
     
       def initialize(data)
         @domain = data.dig('domain', '_value') if data['domain']
-        @code = data.dig('code', '_value') if data['code']
+        @code = data.dig('code', '_value').to_i if data['code']
         @user_info = Models.load_class(data.dig('userInfo', '_type', '_name')).new(data.dig('userInfo')) if data['userInfo']
       end
     end

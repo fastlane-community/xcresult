@@ -43,6 +43,9 @@ module XCResult
         OPEN_MODULE
 
         sorted_types.each do |type|
+          # We use Ruby native classes for values, like Date, String, Int, Double, etc..
+          next if type.kind == 'value'
+
           type_text = compose_type(type, 2 * 2)
           file.puts(type_text)
           file.puts('')
@@ -105,9 +108,6 @@ module XCResult
         @format.version = @json['version'].values.join('.')
         @format.signature = @json['signature']
         @format.types = @json['types'].map do |type|
-          # We use Ruby native classes for values, like Date, String, Int, Double, etc..
-          next if type['kind'] == 'value'
-
           Type.new(
             name: type.dig('type', 'name'),
             supertype: type.dig('type', 'supertype'),
@@ -123,7 +123,7 @@ module XCResult
               )
             end
           )
-        end.compact
+        end
       end
     end
 
@@ -139,7 +139,6 @@ module XCResult
 
       def mapping(kind, variable_name)
         return "(#{variable_name}.dig('#{name}', '_values') || []).map {|d| #{_mapping(kind, 'd')} }" if type == 'Array'
-
         _mapping(kind, variable_name) + (is_optional ? " if #{variable_name}['#{name}']" : '')
       end
 
