@@ -15,16 +15,13 @@ RSpec.describe XCResult do
     parser = XCResult::Parser.new(path: path)
     export_xccovreport_paths = parser.export_xccovreports(destination: destination)
 
-    expect(export_xccovreport_paths.count).to eq(1)  
+    expect(export_xccovreport_paths.count).to eq(1)
   end
 
   it 'parse test plan summaries' do
     parser = XCResult::Parser.new(path: path)
 
-    expect(parser).to receive(:execute_cmd).with("xcrun xcresulttool get --format json --path #{path} --id #{summary_id}").and_call_original
-
     summaries = parser.action_test_plan_summaries
-
     testable_summary = summaries[0].summaries[0].testable_summaries[0]
 
     expect(summaries.count).to eq(1)
