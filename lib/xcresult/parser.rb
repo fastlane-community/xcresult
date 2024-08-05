@@ -28,7 +28,7 @@ module XCResult
       # Maps ids into ActionTestPlanRunSummaries by executing xcresulttool to get JSON
       # containing specific information for each test summary
       @action_test_plan_summaries = ids.map do |id|
-        raw = execute_cmd("xcrun xcresulttool get --format json --path #{path} --id #{id}")
+        raw = xcresulttool_get_command("--format json --path #{path} --id #{id}")
         json = JSON.parse(raw)
         XCResult::ActionTestPlanRunSummaries.new(json)
       end
@@ -77,9 +77,21 @@ module XCResult
     private
 
     def get_result_bundle_json(id: nil)
-      cmd = "xcrun xcresulttool get --format json --path #{path}"
+      cmd = xcresulttool_get_command("--format json --path #{path}")
       cmd += " --id #{id}" if id
       execute_cmd(cmd)
+    end
+
+    def xcresulttool_get_command(args)
+      # Find the current xcresulttool version based on Fastlane's implementation
+      # xcresulttool version 23024, format version 3.53 (current)
+      match = `xcrun xcresulttool version`.match(/xcresulttool version (?<version>\d+),/)
+      version = match[:version]&.to_f
+
+      requires_legacy = version >= 23_021.0
+      legacy_flag = requires_legacy ? '--legacy' : ''
+  
+      cmd = "xcrun xcresulttool get #{legacy_flag} #{args}"
     end
 
     def execute_cmd(cmd)
