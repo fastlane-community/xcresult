@@ -21,7 +21,13 @@ RSpec.describe XCResult do
   it 'parse test plan summaries' do
     parser = XCResult::Parser.new(path: path)
 
-    expect(parser).to receive(:execute_cmd).with("xcrun xcresulttool get --format json --path #{path} --id #{summary_id}").and_call_original
+    match = `xcrun xcresulttool version`.match(/xcresulttool version (?<version>\d+),/)
+    version = match[:version]&.to_f
+
+    requires_legacy = version >= 23_021.0
+    legacy_flag = requires_legacy ? '--legacy' : ''
+
+    expect(parser).to receive(:execute_cmd).with("xcrun xcresulttool get #{legacy_flag} --format json --path #{path} --id #{summary_id}").and_call_original
 
     summaries = parser.action_test_plan_summaries
 

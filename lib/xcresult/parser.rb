@@ -28,7 +28,7 @@ module XCResult
       # Maps ids into ActionTestPlanRunSummaries by executing xcresulttool to get JSON
       # containing specific information for each test summary
       @action_test_plan_summaries = ids.map do |id|
-        raw = xcresulttool_get_command("--format json --path #{path} --id #{id}")
+        raw = execute_cmd(xcresulttool_command("get", "--format json --path #{path} --id #{id}"))
         json = JSON.parse(raw)
         XCResult::ActionTestPlanRunSummaries.new(json)
       end
@@ -48,7 +48,7 @@ module XCResult
       # Exports all xccovreport files from the report references
       ids.each_with_index.map do |id, i|
         output_path = File.join(destination, "action_#{i}.xccovreport")
-        cmd = "xcrun xcresulttool export --path #{path} --id '#{id}' --output-path #{output_path} --type file"
+        cmd = xcresulttool_command("export", "--path #{path} --id '#{id}' --output-path #{output_path} --type file")
         execute_cmd(cmd)
 
         output_path
@@ -67,7 +67,7 @@ module XCResult
       # Exports all xcovarchive directories from the archive references
       ids.each_with_index.map do |id, i|
         output_path = File.join(destination, "action_#{i}.xccovarchive")
-        cmd = "xcrun xcresulttool export --path #{path} --id '#{id}' --output-path #{output_path} --type directory"
+        cmd = xcresulttool_command("export", "--path #{path} --id '#{id}' --output-path #{output_path} --type directory")
         execute_cmd(cmd)
 
         output_path
@@ -77,12 +77,12 @@ module XCResult
     private
 
     def get_result_bundle_json(id: nil)
-      cmd = xcresulttool_get_command("--format json --path #{path}")
+      cmd = xcresulttool_command("get", "--format json --path #{path}")
       cmd += " --id #{id}" if id
       execute_cmd(cmd)
     end
 
-    def xcresulttool_get_command(args)
+    def xcresulttool_command(subcommand, args)
       # Find the current xcresulttool version based on Fastlane's implementation
       # xcresulttool version 23024, format version 3.53 (current)
       match = `xcrun xcresulttool version`.match(/xcresulttool version (?<version>\d+),/)
@@ -91,7 +91,7 @@ module XCResult
       requires_legacy = version >= 23_021.0
       legacy_flag = requires_legacy ? '--legacy' : ''
   
-      cmd = "xcrun xcresulttool get #{legacy_flag} #{args}"
+      cmd = "xcrun xcresulttool #{subcommand} #{legacy_flag} #{args}"
     end
 
     def execute_cmd(cmd)
