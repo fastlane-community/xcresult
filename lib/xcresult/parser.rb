@@ -86,12 +86,13 @@ module XCResult
       # Find the current xcresulttool version based on Fastlane's implementation
       # xcresulttool version 23024, format version 3.53 (current)
       match = `xcrun xcresulttool version`.match(/xcresulttool version (?<version>\d+),/)
+
       version = match[:version]&.to_f
 
       requires_legacy = version >= 23_021.0
-      legacy_flag = requires_legacy ? '--legacy' : ''
+      legacy_flag = requires_legacy ? ' --legacy' : ''
   
-      cmd = "xcrun xcresulttool #{subcommand} #{legacy_flag} #{args}"
+      cmd = "xcrun xcresulttool #{subcommand}#{legacy_flag} #{args}"
     end
 
     def execute_cmd(cmd)
