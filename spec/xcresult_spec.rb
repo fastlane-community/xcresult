@@ -49,6 +49,12 @@ RSpec.describe "XCResult Test Summaries" do
 
   it 'parse test plan summaries' do
     parser = XCResult::Parser.new(path: path)
+
+    expect(parser).to receive(:execute_cmd).with(lambda { |command|
+      is_valid_xcresulttool_command_regex = /^xcrun xcresulttool get( --legacy)? --format json --path .+ --id [a-zA-Z0-9_\~\=]+$/
+      is_valid_xcresulttool_command_regex.match(command) != nil
+     }).and_call_original
+
     summaries = parser.action_test_plan_summaries
 
     testable_summary = summaries[0].summaries[0].testable_summaries[0]
