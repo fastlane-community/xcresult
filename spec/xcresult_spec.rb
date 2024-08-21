@@ -34,6 +34,20 @@ RSpec.describe "XCResult Test Summaries" do
   let(:summary_id) { "0~2LVFAe2LWJ7FCnOsKan5UgGk7WChVJYuZlxPILKyxdpmfjsMrwjBJ2wUhaJQJ36Per_GRUfTI1cKeO2QiGvB8Q==" }
   let!(:subject) { XCResult::Parser.new(path: path) }
 
+  it 'has a version number' do
+    expect(XCResult::VERSION).not_to be nil
+  end
+  
+  it 'parse xccov report paths' do
+    require 'tmpdir'
+    destination = Dir.mktmpdir
+  
+    parser = XCResult::Parser.new(path: path)
+    export_xccovreport_paths = parser.export_xccovreports(destination: destination)
+  
+    expect(export_xccovreport_paths.count).to eq(1)  
+  end
+
   it 'parse test plan summaries' do
     summaries = subject.action_test_plan_summaries
 
