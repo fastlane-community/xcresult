@@ -1,6 +1,35 @@
 # frozen_string_literal: true
 
-RSpec.describe XCResult do
+RSpec.describe "XCResult Version" do
+  let(:path) { File.absolute_path("./spec/fixtures/Test.xcresult") }
+  let(:summary_id) { "0~2LVFAe2LWJ7FCnOsKan5UgGk7WChVJYuZlxPILKyxdpmfjsMrwjBJ2wUhaJQJ36Per_GRUfTI1cKeO2QiGvB8Q==" }
+  let!(:subject) { XCResult::Parser.new(path: path) }
+  let(:command) { subject.send(:xcresulttool_command, "get", "--format json --path #{path} --id #{summary_id}") }
+
+  before do
+    allow(subject).to receive(:`).with('xcrun xcresulttool version').and_return(xcresulttool_version)
+  end
+
+  context 'with below 23_021.0 ' do
+    let(:xcresulttool_version) { 'xcresulttool version 23020, format version 3.53 (current)' }
+    let(:expected) { "xcrun xcresulttool get --format json --path #{path} --id #{summary_id}" }
+
+    it 'should not have --legacy' do
+      expect(command).to eq(expected)
+    end
+  end
+
+  context 'with 23_021.0 and above' do
+    let(:xcresulttool_version) { 'xcresulttool version 23022, format version 3.53 (current)' }
+    let(:expected) { "xcrun xcresulttool get --legacy --format json --path #{path} --id #{summary_id}" }
+
+    it 'should have --legacy' do
+      expect(command).to eq(expected)
+    end
+  end
+end
+
+RSpec.describe "XCResult Test Summaries" do
   let(:path) { File.absolute_path("./spec/fixtures/Test.xcresult") }
   let(:summary_id) { "0~2LVFAe2LWJ7FCnOsKan5UgGk7WChVJYuZlxPILKyxdpmfjsMrwjBJ2wUhaJQJ36Per_GRUfTI1cKeO2QiGvB8Q==" }
 
@@ -21,7 +50,10 @@ RSpec.describe XCResult do
   it 'parse test plan summaries' do
     parser = XCResult::Parser.new(path: path)
 
-    expect(parser).to receive(:execute_cmd).with("xcrun xcresulttool get --format json --path #{path} --id #{summary_id}").and_call_original
+    expect(parser).to receive(:execute_cmd).with(lambda { |command|
+      is_valid_xcresulttool_command_regex = /^xcrun xcresulttool get( --legacy)? --format json --path .+ --id [a-zA-Z0-9_\~\=]+$/
+      is_valid_xcresulttool_command_regex.match(command) != nil
+     }).and_call_original
 
     summaries = parser.action_test_plan_summaries
 
