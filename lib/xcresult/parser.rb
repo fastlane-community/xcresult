@@ -87,9 +87,10 @@ module XCResult
       # xcresulttool version 23024, format version 3.53 (current)
       match = `xcrun xcresulttool version`.match(/xcresulttool version (?<version>\d+),/)
 
-      version = match[:version]&.to_f
+      version = match ? match[:version]&.to_f : nil
 
-      requires_legacy = version >= 23_021.0
+      # If version string does not match expected format, assume legacy is required
+      requires_legacy = version.nil? || version >= 23_021.0
       legacy_flag = requires_legacy ? ' --legacy' : ''
   
       cmd = "xcrun xcresulttool #{subcommand}#{legacy_flag} #{args}"
