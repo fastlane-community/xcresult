@@ -27,6 +27,15 @@ RSpec.describe "XCResult Version" do
       expect(command).to eq(expected)
     end
   end
+
+  context 'with Xcode 26 command line tools version style' do
+    let(:xcresulttool_version) { 'xcresulttool version 24051.1, schema version: 0.1.0 (legacy commands format version: 3.53)' }
+    let(:expected) { "xcrun xcresulttool get --legacy --format json --path #{path} --id #{summary_id}" }
+
+    it 'should have --legacy' do
+      expect(command).to eq(expected)
+    end
+  end  
 end
 
 RSpec.describe "XCResult Test Summaries" do
