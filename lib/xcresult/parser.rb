@@ -86,7 +86,7 @@ module XCResult
       # Find the current xcresulttool version based on Fastlane's implementation
       # xcresulttool version 23024, format version 3.53 (current)
       # xcresulttool version 24051.1, schema version: 0.1.0 (legacy commands format version: 3.53)
-      match = `xcrun xcresulttool version`.match(/xcresulttool version (?<version>[0-9\.]+),/)
+      match = `xcrun xcresulttool version`.match(/xcresulttool version (?<version>\d+(\.\d+)?),/)
 
       version = match ? match[:version]&.to_f : nil
 
