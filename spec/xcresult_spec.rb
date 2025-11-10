@@ -3,13 +3,11 @@
 RSpec.describe "XCResult Version" do
   let(:path) { File.absolute_path("./spec/fixtures/Test.xcresult") }
   let(:summary_id) { "0~2LVFAe2LWJ7FCnOsKan5UgGk7WChVJYuZlxPILKyxdpmfjsMrwjBJ2wUhaJQJ36Per_GRUfTI1cKeO2QiGvB8Q==" }
-  let(:subject) { XCResult::Parser.new(path: path) }
+  let!(:subject) { XCResult::Parser.new(path: path) }
   let(:command) { subject.send(:xcresulttool_command, "get", "--format json --path #{path} --id #{summary_id}") }
-  let(:xcresulttool_result) { double('xcresulttool_result') }
 
   before do
     allow(subject).to receive(:`).with('xcrun xcresulttool version').and_return(xcresulttool_version)
-    allow(Kernel).to receive(:`).with(a_string_starting_with('xcrun xcresulttool')).and_return(xcresulttool_result)
   end
 
   context 'with below 23_021.0 ' do
