@@ -85,11 +85,13 @@ module XCResult
     def xcresulttool_command(subcommand, args)
       # Find the current xcresulttool version based on Fastlane's implementation
       # xcresulttool version 23024, format version 3.53 (current)
-      match = `xcrun xcresulttool version`.match(/xcresulttool version (?<version>\d+),/)
+      # xcresulttool version 24051.1, schema version: 0.1.0 (legacy commands format version: 3.53)
+      match = `xcrun xcresulttool version`.match(/xcresulttool version (?<version>\d+(\.\d+)?),/)
 
-      version = match[:version]&.to_f
+      version = match ? match[:version]&.to_f : nil
 
-      requires_legacy = version >= 23_021.0
+      # If version string does not match expected format, assume legacy is required
+      requires_legacy = version.nil? || version >= 23_021.0
       legacy_flag = requires_legacy ? ' --legacy' : ''
   
       cmd = "xcrun xcresulttool #{subcommand}#{legacy_flag} #{args}"
