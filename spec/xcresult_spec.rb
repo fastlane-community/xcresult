@@ -9,7 +9,7 @@ RSpec.describe "XCResult Version" do
 
   before do
     allow(subject).to receive(:`).with('xcrun xcresulttool version').and_return(xcresulttool_version)
-    allow(subject).to receive(:`).with(a_string_starting_with('xcrun xcresulttool get')).and_return(xcresulttool_result)
+    allow(Kernel).to receive(:`).with(a_string_starting_with('xcrun xcresulttool')).and_return(xcresulttool_result)
   end
 
   context 'with below 23_021.0 ' do
