@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    xcresult (0.2.2)
+    xcresult (0.2.4)
 
 GEM
   remote: https://rubygems.org/
