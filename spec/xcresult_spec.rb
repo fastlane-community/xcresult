@@ -3,7 +3,7 @@
 RSpec.describe "XCResult Version" do
   let(:path) { File.absolute_path("./spec/fixtures/Test.xcresult") }
   let(:summary_id) { "0~2LVFAe2LWJ7FCnOsKan5UgGk7WChVJYuZlxPILKyxdpmfjsMrwjBJ2wUhaJQJ36Per_GRUfTI1cKeO2QiGvB8Q==" }
-  let!(:subject) { XCResult::Parser.new(path: path) }
+  let(:subject) { XCResult::Parser.new(path: path) }
   let(:command) { subject.send(:xcresulttool_command, "get", "--format json --path #{path} --id #{summary_id}") }
   let(:xcresulttool_result) { double('xcresulttool_result') }
 
