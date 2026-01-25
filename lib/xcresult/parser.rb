@@ -8,7 +8,7 @@ module XCResult
     attr_accessor :path, :result_bundle_json, :actions_invocation_record
 
     def initialize(path: nil)
-      @path = Shellwords.escape(path)
+      @path = Shellwords.escape(File.expand_path(path))
 
       result_bundle_json_raw = get_result_bundle_json
       @result_bundle_json = JSON.parse(result_bundle_json_raw)
